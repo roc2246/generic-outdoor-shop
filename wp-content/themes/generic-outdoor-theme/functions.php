@@ -1,7 +1,7 @@
 <?php
 
 function generic_outdoor_theme_enqueue_styles() {
-    wp_enqueue_style('generic-outdoor-style', get_stylesheet_uri(), array(), '1.0');
+    wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/css/dist/main.css'), array(), '1.0');
 }
 add_action('wp_enqueue_scripts', 'generic_outdoor_theme_enqueue_styles');
 
