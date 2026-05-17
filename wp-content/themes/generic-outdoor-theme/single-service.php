@@ -17,16 +17,16 @@ while ( have_posts() ) {
       </p>
     </div>
 
-    <div class="product-detail service-detail">
+    <div class="service-detail">
       <?php if ( has_post_thumbnail() ) : ?>
-        <div class="product-detail__image"><?php the_post_thumbnail( 'large' ); ?></div>
+        <div class="service-detail__image"><?php the_post_thumbnail( 'large' ); ?></div>
       <?php endif; ?>
 
-      <div class="product-detail__summary">
+      <div class="service-detail__summary">
         <?php if ( function_exists( 'get_field' ) ) : ?>
           <?php $price = get_field( 'price' ); ?>
           <?php if ( $price ) : ?>
-            <p class="product-detail__price">Price: <?php echo esc_html( $price ); ?></p>
+            <p class="service-detail__price">Price: <?php echo esc_html( $price ); ?></p>
           <?php endif; ?>
         <?php endif; ?>
 
