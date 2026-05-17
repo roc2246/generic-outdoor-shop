@@ -27,11 +27,11 @@ add_filter( 'generic_outdoor_service_args', function( $args ) {
 } );
 */
 
-if ( ! defined( 'WPINC' ) ) {
+if (!defined('WPINC')) {
     die;
 }
 
-add_action( 'admin_notices', function() {
+add_action('admin_notices', function () {
     echo '<div class="notice notice-success is-dismissible"><p>Generic Outdoor MU plugin active.</p></div>';
 });
 
@@ -40,7 +40,8 @@ add_action( 'admin_notices', function() {
 /**
  * Register custom post types: Products and Services
  */
-function generic_outdoor_register_post_types() {
+function generic_outdoor_register_post_types()
+{
     // Products
     $product_args = array(
         'show_in_rest' => true,
@@ -62,7 +63,7 @@ function generic_outdoor_register_post_types() {
      *
      * @param array $product_args Array of arguments for register_post_type.
      */
-    $product_args = apply_filters( 'generic_outdoor_product_args', $product_args );
+    $product_args = apply_filters('generic_outdoor_product_args', $product_args);
     register_post_type('product', $product_args);
 
     // Services
@@ -86,9 +87,22 @@ function generic_outdoor_register_post_types() {
      *
      * @param array $service_args Array of arguments for register_post_type.
      */
-    $service_args = apply_filters( 'generic_outdoor_service_args', $service_args );
+    $service_args = apply_filters('generic_outdoor_service_args', $service_args);
     register_post_type('service', $service_args);
 }
+
+function register_product_taxonomy()
+{
+    register_taxonomy('product_type', 'product', array(
+        'label' => 'Product Type',
+        'public' => true,
+        'hierarchical' => true,
+        'show_in_rest' => true, // IMPORTANT for API
+        'rewrite' => array('slug' => 'product-type'),
+    ));
+}
+add_action('init', 'register_product_taxonomy');
+
 /**
  * Register custom post types: Products and Services
  *
