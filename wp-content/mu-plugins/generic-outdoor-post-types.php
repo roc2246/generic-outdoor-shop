@@ -46,6 +46,7 @@ function generic_outdoor_register_post_types() {
         'show_in_rest' => true,
         'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
+        'has_archive' => true,
         'labels' => array(
             'name' => 'Products',
             'add_new_item' => 'Add New Product',
@@ -68,6 +69,7 @@ function generic_outdoor_register_post_types() {
         'show_in_rest' => true,
         'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
+        'has_archive' => true,
         'labels' => array(
             'name' => 'Services',
             'add_new_item' => 'Add New Service',
