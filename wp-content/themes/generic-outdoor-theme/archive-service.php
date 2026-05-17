@@ -32,7 +32,8 @@ pageBanner(array(
                         </a>
 
                         <p class="service-card__excerpt">
-                            <?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 25); ?></p>
+                            <?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 25); ?>
+                        </p>
                         <?php if (function_exists('get_field')): ?>
                             <?php $price = get_field('service_price'); ?>
                             <?php if ($price): ?>

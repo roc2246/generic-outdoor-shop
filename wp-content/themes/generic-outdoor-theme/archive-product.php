@@ -35,12 +35,9 @@ pageBanner(array(
 
             <p class="product-card__excerpt"><?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 25); ?></p>
             <?php if (function_exists('get_field')): ?>
-              <?php $name = get_field('product_name'); ?>
-              <?php if ($name): ?>
-                <p class="product-card__name">name: <?php echo esc_html($name); ?></p>
-              <?php endif; ?>
-              <?php $price = get_field('price'); ?>
-              <?php if ($price): ?>
+              <?php
+              $price = get_field('price');
+              if ($price): ?>
                 <p class="product-card__price">Price: <?php echo esc_html($price); ?></p>
               <?php endif; ?>
             <?php endif; ?>
