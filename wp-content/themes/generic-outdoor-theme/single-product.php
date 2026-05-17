@@ -24,6 +24,10 @@ while ( have_posts() ) {
 
       <div class="product-detail__summary">
         <?php if ( function_exists( 'get_field' ) ) : ?>
+           <?php $name = get_field( 'product_name' ); ?>
+          <?php if ( $name ) : ?>
+            <p class="product-detail__name">name: <?php echo esc_html( $name ); ?></p>
+          <?php endif; ?>
           <?php $price = get_field( 'price' ); ?>
           <?php if ( $price ) : ?>
             <p class="product-detail__price">Price: <?php echo esc_html( $price ); ?></p>
