@@ -24,7 +24,7 @@ pageBanner(array(
             <h2 class="product-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
             <p class="product-card__excerpt"><?php echo wp_trim_words( get_the_excerpt() ?: get_the_content(), 25 ); ?></p>
             <?php if ( function_exists( 'get_field' ) ) : ?>
-              <?php $price = get_field( 'price' ); ?>
+              <?php $price = get_field( 'service_price' ); ?>
               <?php if ( $price ) : ?>
                 <p class="product-card__price">Price: <?php echo esc_html( $price ); ?></p>
               <?php endif; ?>
