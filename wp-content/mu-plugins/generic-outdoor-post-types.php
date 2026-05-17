@@ -44,7 +44,7 @@ function generic_outdoor_register_post_types() {
     // Products
     $product_args = array(
         'show_in_rest' => true,
-        'supports' => array('title', 'editor', 'thumbnail'),
+        'supports' => array('title', 'thumbnail'),
         'public' => true,
         'has_archive' => true,
         'rewrite' => array('slug' => 'products'),
@@ -68,7 +68,7 @@ function generic_outdoor_register_post_types() {
     // Services
     $service_args = array(
         'show_in_rest' => true,
-        'supports' => array('title', 'editor', 'thumbnail'),
+        'supports' => array('title', 'thumbnail'),
         'public' => true,
         'has_archive' => true,
         'rewrite' => array('slug' => 'services'),
