@@ -1,0 +1,8 @@
+// Header layout
+.site-branding { display: flex; align-items: center; gap: 12px; }
+.site-title { margin: 0; font-size: 1.25rem; }
+.site-navigation { display: none; }
+
+@media (min-width: 768px) {
+  .site-navigation { display: block; }
+}

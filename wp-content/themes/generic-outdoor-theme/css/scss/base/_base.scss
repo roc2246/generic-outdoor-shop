@@ -1,0 +1,13 @@
+// Base element styles
+body {
+  font-family: $font-stack;
+  color: #222;
+  background: #fff;
+}
+
+.site-header, .site-footer {
+  padding: $container-padding;
+  background: $muted;
+}
+
+a { color: $brand-color; }

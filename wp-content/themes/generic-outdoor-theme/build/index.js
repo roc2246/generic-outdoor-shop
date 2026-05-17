@@ -1,0 +1,1 @@
+(()=>{"use strict";function e(){console.log("Generic Outdoor theme: frontend JS initialized");const e=document.querySelector(".menu-toggle"),t=document.querySelector(".site-navigation");e&&t&&e.addEventListener("click",()=>t.classList.toggle("is-open"))}"undefined"!=typeof window&&("loading"===document.readyState?document.addEventListener("DOMContentLoaded",e):e())})();
