@@ -1,19 +1,6 @@
-function initTheme() {
-  console.log('Generic Outdoor theme: frontend JS initialized');
-  // Example: toggle mobile menu
-  const btn = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.site-navigation');
-  if (btn && nav) {
-    btn.addEventListener('click', () => nav.classList.toggle('is-open'));
-  }
-}
+import "../css/main.scss"
 
-if (typeof window !== 'undefined') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTheme);
-  } else {
-    initTheme();
-  }
-}
+import Search from './modules/Search';
 
-export default initTheme;
+const search = new Search();
+
