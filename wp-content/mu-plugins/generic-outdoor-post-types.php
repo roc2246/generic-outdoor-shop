@@ -47,6 +47,7 @@ function generic_outdoor_register_post_types() {
         'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
         'has_archive' => true,
+        'rewrite' => array('slug' => 'products'),
         'labels' => array(
             'name' => 'Products',
             'add_new_item' => 'Add New Product',
@@ -70,6 +71,7 @@ function generic_outdoor_register_post_types() {
         'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
         'has_archive' => true,
+        'rewrite' => array('slug' => 'services'),
         'labels' => array(
             'name' => 'Services',
             'add_new_item' => 'Add New Service',
