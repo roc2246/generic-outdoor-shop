@@ -28,6 +28,10 @@ while ( have_posts() ) {
           <?php if ( $price ) : ?>
             <p class="service-detail__price">Price: <?php echo esc_html( $price ); ?></p>
           <?php endif; ?>
+             <?php $description = get_field( 'service_description' ); ?>
+          <?php if ( $description ) : ?>
+            <p class="service-detail__Description">Description: <?php echo esc_html( $description ); ?></p>
+          <?php endif; ?>
         <?php endif; ?>
 
         <div class="generic-content"><?php the_content(); ?></div>
