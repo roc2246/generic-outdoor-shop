@@ -2,6 +2,8 @@ wp-admin/
 wp-includes/
 wp-content/uploads/
 wp-content/cache/
+wp-content/plugins
+wp-content/plugins/advanced-custom-fields/
 wp-config.php
 *.log
 .DS_Store
