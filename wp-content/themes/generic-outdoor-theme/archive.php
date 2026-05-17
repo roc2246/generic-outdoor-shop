@@ -14,30 +14,30 @@ pageBanner(array(
 
     <?php if (have_posts()): ?>
 
-        <div class="service-grid">
+        <div class="grid">
 
             <?php while (have_posts()): the_post(); ?>
 
-                <article class="service-card">
+                <article class="card">
 
-                    <div class="service-card__content">
+                    <div class="card__content">
 
                         <!-- TITLE (generic fallback) -->
-                        <h2 class="service-card__title">
+                        <h2 class="card__title">
                             <?php the_title(); ?>
                         </h2>
 
                         <!-- IMAGE -->
-                        <a class="service-card__image-link" href="<?php the_permalink(); ?>">
+                        <a class="card__image-link" href="<?php the_permalink(); ?>">
                             <?php if (has_post_thumbnail()): ?>
                                 <?php the_post_thumbnail('medium'); ?>
                             <?php else: ?>
-                                <div class="service-card__placeholder">No image available</div>
+                                <div class="card__placeholder">No image available</div>
                             <?php endif; ?>
                         </a>
 
                         <!-- EXCERPT -->
-                        <p class="service-card__excerpt">
+                        <p class="card__excerpt">
                             <?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 25); ?>
                         </p>
 
@@ -45,7 +45,7 @@ pageBanner(array(
                         <?php if (function_exists('get_field')): ?>
                             <?php $price = get_field('price'); ?>
                             <?php if ($price): ?>
-                                <p class="service-card__price">
+                                <p class="card__price">
                                     Price: <?php echo esc_html($price); ?>
                                 </p>
                             <?php endif; ?>
