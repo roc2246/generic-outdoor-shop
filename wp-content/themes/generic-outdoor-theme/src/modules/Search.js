@@ -20,6 +20,9 @@ class Search {
   events() {
     this.openButton.addEventListener("click", () => this.openOverlay())
     this.closeButton.addEventListener("click", () => this.closeOverlay())
+    this.closeButton.addEventListener("click", () => {
+      console.log("TEST")
+    })
 
     document.addEventListener("keydown", (e) => this.keyPressDispatcher(e))
     this.searchField.addEventListener("keyup", () => this.typingLogic())
