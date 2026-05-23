@@ -55,17 +55,24 @@ class Search {
   async getResults() {
     try {
       const base = wpSite.root_url
-      const query = this.searchField.value
+      const query = encodeURIComponent(this.searchField.value)
 
-      const [postsRes, pagesRes] = await Promise.all([
-        fetch(`${base}/wp-json/wp/v2/posts?search=${query}`),
-        fetch(`${base}/wp-json/wp/v2/pages?search=${query}`)
-      ])
+      const endpoints = [
+        `${base}/wp-json/wp/v2/posts?search=${query}`,
+        `${base}/wp-json/wp/v2/pages?search=${query}`,
+        `${base}/wp-json/wp/v2/product?search=${query}`,
+        `${base}/wp-json/wp/v2/service?search=${query}`
+      ]
 
-      const posts = await postsRes.json()
-      const pages = await pagesRes.json()
+      const responses = await Promise.all(
+        endpoints.map((url) =>
+          fetch(url).then((res) => (res.ok ? res.json() : []))
+        )
+      )
 
-      const combinedResults = [...posts, ...pages]
+      const [posts, pages, products, services] = responses
+
+      const combinedResults = [...posts, ...pages, ...products, ...services]
 
       this.resultsDiv.innerHTML = `
         <h2 class="search-overlay__section-title">General Information</h2>
