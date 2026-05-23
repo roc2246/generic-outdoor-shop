@@ -19,11 +19,11 @@
             </div>
             <nav class="site-navigation">
                 <?php wp_nav_menu(array('theme_location' => 'primary')); ?>
-                <button class="js-search-trigger search-icon-button" aria-label="Open search">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M10 18a8 8 0 1 1 5.293-14.293A8 8 0 0 1 10 18zm11 3-6-6" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </button>
             </nav>
+            <button type="button" class="js-search-trigger search-icon-button" aria-label="Open search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 18a8 8 0 1 1 5.293-14.293A8 8 0 0 1 10 18zm11 3-6-6" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
         </header>
