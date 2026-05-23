@@ -2,8 +2,16 @@
 
 function generic_outdoor_theme_enqueue_styles()
 {
-    wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/css/dist/main.css'), array(), '1.0');
-    wp_enqueue_script('generic-outdoor-js', get_theme_file_uri('/src/index.js'), array(), '1.0', true);
+    wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/build/index.css'), array(), filemtime(get_theme_file_path('/build/index.css')));
+
+    $script_asset = include get_theme_file_path('/build/index.asset.php');
+    wp_enqueue_script(
+        'generic-outdoor-js',
+        get_theme_file_uri('/build/index.js'),
+        $script_asset['dependencies'],
+        $script_asset['version'],
+        true
+    );
 
     wp_localize_script('generic-outdoor-js', 'wpSite', array(
         'root_url' => get_site_url(),
