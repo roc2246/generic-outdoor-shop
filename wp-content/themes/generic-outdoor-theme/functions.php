@@ -6,13 +6,15 @@ require get_theme_file_path('/inc/search-route.php');
 
 // FOR CUSTOM REST API ENDPOINTS, UNCOMMENT THE FOLLOWING CODE
 
-// function generic_outdoor_theme_custom_rest() {
-//   register_rest_field('post', 'authorName', array(
-//     'get_callback' => function() {return get_the_author();}
-//   ));
-// }
+function generic_outdoor_theme_custom_rest() {
+ register_rest_field('product', 'price', array(
+  'get_callback' => function($post) {
+    return get_field('price', $post['id']);
+  }
+));
+}
 
-// add_action('rest_api_init', 'generic_outdoor_theme_custom_rest');
+add_action('rest_api_init', 'generic_outdoor_theme_custom_rest');
 
 function generic_outdoor_theme_enqueue_styles()
 {

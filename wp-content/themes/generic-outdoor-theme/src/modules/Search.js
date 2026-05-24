@@ -53,58 +53,86 @@ class Search {
 
   // FETCH RESULTS (WordPress REST API)
   async getResults() {
-    try {
-      const base = wpSite.root_url
-      const query = encodeURIComponent(this.searchField.value)
+  try {
+    const base = wpSite.root_url
+    const query = encodeURIComponent(this.searchField.value)
 
-      const endpoints = [
-        `${base}/wp-json/wp/v2/posts?search=${query}`,
-        `${base}/wp-json/wp/v2/pages?search=${query}`,
-        `${base}/wp-json/wp/v2/product?search=${query}`,
-        `${base}/wp-json/wp/v2/service?search=${query}`
-      ]
+    const endpoints = [
+      `${base}/wp-json/wp/v2/posts?search=${query}`,
+      `${base}/wp-json/wp/v2/pages?search=${query}`,
+      `${base}/wp-json/wp/v2/product?search=${query}`,
+      `${base}/wp-json/wp/v2/service?search=${query}`,
+      `${base}/wp-json/wp/v2/product_type?search=${query}`,
+    ]
 
-      const responses = await Promise.all(
-        endpoints.map((url) =>
-          fetch(url).then((res) => (res.ok ? res.json() : []))
+    const responses = await Promise.all(
+      endpoints.map((url) =>
+        fetch(url).then((res) => (res.ok ? res.json() : []))
+      )
+    )
+
+    const [posts, pages, products, services, productTypes] = responses
+
+    let productsByType = []
+
+    if (productTypes.length) {
+      const productTypeResults = await Promise.all(
+        productTypes.map((term) =>
+          fetch(`${base}/wp-json/wp/v2/product?product_type=${term.id}`).then(
+            (res) => (res.ok ? res.json() : [])
+          )
         )
       )
 
-      const [posts, pages, products, services] = responses
-
-      const combinedResults = [...posts, ...pages, ...products, ...services]
-
-      this.resultsDiv.innerHTML = `
-        <h2 class="search-overlay__section-title">General Information</h2>
-
-        ${
-          combinedResults.length
-            ? `<ul class="link-list min-list">`
-            : `<p>No general information matches that search.</p>`
-        }
-
-        ${combinedResults
-          .map(
-            item => `
-              <li>
-                <a href="${item.link}">
-                  ${item.title.rendered}
-                </a>
-              </li>
-            `
-          )
-          .join("")}
-
-        ${combinedResults.length ? `</ul>` : ``}
-      `
-
-      this.isSpinnerVisible = false
-
-    } catch (err) {
-      this.resultsDiv.innerHTML =
-        "<p>Unexpected error; please try again.</p>"
+      productsByType = productTypeResults.flat()
     }
+
+    const combinedResults = [
+      ...posts,
+      ...pages,
+      ...products,
+      ...services,
+      ...productsByType,
+    ]
+
+    const uniqueResults = combinedResults.filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex(
+          (result) => result.id === item.id && result.type === item.type
+        )
+    )
+
+    this.resultsDiv.innerHTML = `
+      <h2 class="search-overlay__section-title">General Information</h2>
+
+      ${
+        uniqueResults.length
+          ? `<ul class="link-list min-list">`
+          : `<p>No general information matches that search.</p>`
+      }
+
+      ${uniqueResults
+        .map(
+          (item) => `
+            <li>
+              <a href="${item.link}">
+                ${item.title.rendered}
+              </a>
+            </li>
+          `
+        )
+        .join("")}
+
+      ${uniqueResults.length ? `</ul>` : ``}
+    `
+
+    this.isSpinnerVisible = false
+  } catch (err) {
+    this.resultsDiv.innerHTML = "<p>Unexpected error; please try again.</p>"
+    this.isSpinnerVisible = false
   }
+}
 
   // KEYBOARD SHORTCUTS
   keyPressDispatcher(e) {
