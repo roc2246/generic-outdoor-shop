@@ -1,174 +1,199 @@
+import axios from "axios";
+
 class Search {
   constructor() {
-    this.addSearchHTML()
+    this.addSearchHTML();
 
-    this.resultsDiv = document.querySelector("#search-overlay__results")
-    this.openButton = document.querySelector(".js-search-trigger")
-    this.closeButton = document.querySelector(".search-overlay__close")
-    this.searchOverlay = document.querySelector(".search-overlay")
-    this.searchField = document.querySelector("#search-term")
+    this.resultsDiv = document.querySelector("#search-overlay__results");
+    this.openButton = document.querySelector(".js-search-trigger");
+    this.closeButton = document.querySelector(".search-overlay__close");
+    this.searchOverlay = document.querySelector(".search-overlay");
+    this.searchField = document.querySelector("#search-term");
 
-    this.isOverlayOpen = false
-    this.isSpinnerVisible = false
-    this.previousValue = ""
-    this.typingTimer = null
+    this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.previousValue = "";
+    this.typingTimer = null;
 
-    this.events()
+    this.events();
   }
 
   // EVENTS
   events() {
-    this.openButton.addEventListener("click", () => this.openOverlay())
-    this.closeButton.addEventListener("click", () => this.closeOverlay())
+    this.openButton.addEventListener("click", () => this.openOverlay());
+    this.closeButton.addEventListener("click", () => this.closeOverlay());
     this.closeButton.addEventListener("click", () => {
-      console.log("TEST")
-    })
+      console.log("TEST");
+    });
 
-    document.addEventListener("keydown", (e) => this.keyPressDispatcher(e))
-    this.searchField.addEventListener("keyup", () => this.typingLogic())
+    document.addEventListener("keydown", (e) => this.keyPressDispatcher(e));
+    this.searchField.addEventListener("keyup", () => this.typingLogic());
   }
 
   // TYPING LOGIC
   typingLogic() {
-    const value = this.searchField.value
+    const value = this.searchField.value;
 
     if (value !== this.previousValue) {
-      clearTimeout(this.typingTimer)
+      clearTimeout(this.typingTimer);
 
       if (value) {
         if (!this.isSpinnerVisible) {
-          this.resultsDiv.innerHTML = `<div class="spinner-loader"></div>`
-          this.isSpinnerVisible = true
+          this.resultsDiv.innerHTML = `<div class="spinner-loader"></div>`;
+          this.isSpinnerVisible = true;
         }
 
-        this.typingTimer = setTimeout(() => this.getResults(), 750)
+        this.typingTimer = setTimeout(() => this.getResults(), 750);
       } else {
-        this.resultsDiv.innerHTML = ""
-        this.isSpinnerVisible = false
+        this.resultsDiv.innerHTML = "";
+        this.isSpinnerVisible = false;
       }
     }
 
-    this.previousValue = value
+    this.previousValue = value;
   }
 
   // FETCH RESULTS (WordPress REST API)
+
   async getResults() {
-  try {
-    const base = wpSite.root_url
-    const query = encodeURIComponent(this.searchField.value)
+    try {
+      const base = wpSite.root_url;
+      const query = encodeURIComponent(this.searchField.value);
 
-    const endpoints = [
-      `${base}/wp-json/wp/v2/posts?search=${query}`,
-      `${base}/wp-json/wp/v2/pages?search=${query}`,
-      `${base}/wp-json/wp/v2/product?search=${query}`,
-      `${base}/wp-json/wp/v2/service?search=${query}`,
-      `${base}/wp-json/wp/v2/product_type?search=${query}`,
-    ]
+      const response = await fetch(
+        `${base}/wp-json/genericOutdoor/v1/search?term=${query}`,
+      );
 
-    const responses = await Promise.all(
-      endpoints.map((url) =>
-        fetch(url).then((res) => (res.ok ? res.json() : []))
-      )
-    )
-
-    const [posts, pages, products, services, productTypes] = responses
-
-    let productsByType = []
-
-    if (productTypes.length) {
-      const productTypeResults = await Promise.all(
-        productTypes.map((term) =>
-          fetch(`${base}/wp-json/wp/v2/product?product_type=${term.id}`).then(
-            (res) => (res.ok ? res.json() : [])
-          )
-        )
-      )
-
-      productsByType = productTypeResults.flat()
-    }
-
-    const combinedResults = [
-      ...posts,
-      ...pages,
-      ...products,
-      ...services,
-      ...productsByType,
-    ]
-
-    const uniqueResults = combinedResults.filter(
-      (item, index, self) =>
-        index ===
-        self.findIndex(
-          (result) => result.id === item.id && result.type === item.type
-        )
-    )
-
-    this.resultsDiv.innerHTML = `
-      <h2 class="search-overlay__section-title">General Information</h2>
-
-      ${
-        uniqueResults.length
-          ? `<ul class="link-list min-list">`
-          : `<p>No general information matches that search.</p>`
+      if (!response.ok) {
+        throw new Error("Search request failed");
       }
 
-      ${uniqueResults
-        .map(
-          (item) => `
-            <li>
-              <a href="${item.link}">
-                ${item.title.rendered}
-              </a>
-            </li>
-          `
-        )
-        .join("")}
+      const results = await response.json();
 
-      ${uniqueResults.length ? `</ul>` : ``}
-    `
+      this.resultsDiv.innerHTML = `
+      <div class="row">
+        <div class="one-third">
+          <h2 class="search-overlay__section-title">General Information</h2>
 
-    this.isSpinnerVisible = false
-  } catch (err) {
-    this.resultsDiv.innerHTML = "<p>Unexpected error; please try again.</p>"
-    this.isSpinnerVisible = false
+          ${
+            results.generalInfo.length
+              ? `<ul class="link-list min-list">`
+              : `<p>No general information matches that search.</p>`
+          }
+
+          ${results.generalInfo
+            .map(
+              (item) => `
+                <li>
+                  <a href="${item.permalink}">
+                    ${item.title}
+                  </a>
+                  ${
+                    item.postType === "post" && item.authorName
+                      ? ` by ${item.authorName}`
+                      : ""
+                  }
+                </li>
+              `,
+            )
+            .join("")}
+
+          ${results.generalInfo.length ? `</ul>` : ``}
+        </div>
+
+        <div class="one-third">
+          <h2 class="search-overlay__section-title">Products</h2>
+
+          ${
+            results.products.length
+              ? `<ul class="link-list min-list">`
+              : `<p>No products match that search.</p>`
+          }
+
+          ${results.products
+            .map(
+              (item) => `
+                <li>
+                  <a href="${item.permalink}">
+                    ${item.title}
+                  </a>
+                  ${item.price ? `<span> - $${item.price}</span>` : ""}
+                </li>
+              `,
+            )
+            .join("")}
+
+          ${results.products.length ? `</ul>` : ``}
+        </div>
+
+        <div class="one-third">
+          <h2 class="search-overlay__section-title">Services</h2>
+
+          ${
+            results.services.length
+              ? `<ul class="link-list min-list">`
+              : `<p>No services match that search.</p>`
+          }
+
+          ${results.services
+            .map(
+              (item) => `
+                <li>
+                  <a href="${item.permalink}">
+                    ${item.title}
+                  </a>
+                </li>
+              `,
+            )
+            .join("")}
+
+          ${results.services.length ? `</ul>` : ``}
+        </div>
+      </div>
+    `;
+
+      this.isSpinnerVisible = false;
+    } catch (err) {
+      this.resultsDiv.innerHTML = "<p>Unexpected error; please try again.</p>";
+      this.isSpinnerVisible = false;
+    }
   }
-}
-
+  
   // KEYBOARD SHORTCUTS
   keyPressDispatcher(e) {
     const isInputFocused =
       document.activeElement.tagName === "INPUT" ||
-      document.activeElement.tagName === "TEXTAREA"
+      document.activeElement.tagName === "TEXTAREA";
 
     if (e.key === "s" && !this.isOverlayOpen && !isInputFocused) {
-      this.openOverlay()
+      this.openOverlay();
     }
 
     if (e.key === "Escape" && this.isOverlayOpen) {
-      this.closeOverlay()
+      this.closeOverlay();
     }
   }
 
   // OPEN
   openOverlay() {
-    this.searchOverlay.classList.add("search-overlay--active")
-    document.body.classList.add("body-no-scroll")
+    this.searchOverlay.classList.add("search-overlay--active");
+    document.body.classList.add("body-no-scroll");
 
-    this.searchField.value = ""
+    this.searchField.value = "";
 
-    setTimeout(() => this.searchField.focus(), 300)
+    setTimeout(() => this.searchField.focus(), 300);
 
-    console.log("open method ran")
-    this.isOverlayOpen = true
+    console.log("open method ran");
+    this.isOverlayOpen = true;
   }
 
   // CLOSE
   closeOverlay() {
-    this.searchOverlay.classList.remove("search-overlay--active")
-    document.body.classList.remove("body-no-scroll")
+    this.searchOverlay.classList.remove("search-overlay--active");
+    document.body.classList.remove("body-no-scroll");
 
-    console.log("close method ran")
-    this.isOverlayOpen = false
+    console.log("close method ran");
+    this.isOverlayOpen = false;
   }
 
   // INJECT HTML
@@ -189,9 +214,9 @@ class Search {
           <div id="search-overlay__results"></div>
         </div>
       </div>
-      `
-    )
+      `,
+    );
   }
 }
 
-export default Search
+export default Search;

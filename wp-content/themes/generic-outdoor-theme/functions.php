@@ -1,10 +1,6 @@
 <?php
 
-// Uncomment the following code to register a custom REST API endpoint for search functionality
-
 require get_theme_file_path('/inc/search-route.php');
-
-// FOR CUSTOM REST API ENDPOINTS, UNCOMMENT THE FOLLOWING CODE
 
 function generic_outdoor_theme_custom_rest() {
  register_rest_field('product', 'price', array(
