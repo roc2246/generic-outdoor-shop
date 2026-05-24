@@ -1,5 +1,19 @@
 <?php
 
+// Uncomment the following code to register a custom REST API endpoint for search functionality
+
+require get_theme_file_path('/inc/search-route.php');
+
+// FOR CUSTOM REST API ENDPOINTS, UNCOMMENT THE FOLLOWING CODE
+
+// function generic_outdoor_theme_custom_rest() {
+//   register_rest_field('post', 'authorName', array(
+//     'get_callback' => function() {return get_the_author();}
+//   ));
+// }
+
+// add_action('rest_api_init', 'generic_outdoor_theme_custom_rest');
+
 function generic_outdoor_theme_enqueue_styles()
 {
     wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/build/index.css'), array(), filemtime(get_theme_file_path('/build/index.css')));
