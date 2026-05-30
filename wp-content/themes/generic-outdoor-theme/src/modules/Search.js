@@ -185,6 +185,7 @@ class Search {
 
     console.log("open method ran");
     this.isOverlayOpen = true;
+    return false
   }
 
   // CLOSE
