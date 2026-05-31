@@ -13,12 +13,13 @@
             <div class="site-branding">
                 <?php if (function_exists('the_custom_logo'))
                     the_custom_logo(); ?>
-                <h1 class="site-title"><a
-                        href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a></h1>
+                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
+                </h1>
                 <p class="site-description"><?php bloginfo('description'); ?></p>
             </div>
             <div class="site-header__controls">
-                <button type="button" class="js-menu-toggle menu-toggle-button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation">
+                <button type="button" class="js-menu-toggle menu-toggle-button" aria-label="Open menu"
+                    aria-expanded="false" aria-controls="site-navigation">
                     <span class="menu-toggle-icon" aria-hidden="true"></span>
                 </button>
 
@@ -28,6 +29,19 @@
                             stroke-width="2" stroke-linecap="round" />
                     </svg>
                 </button>
+                <?php if (is_user_logged_in()) { ?>
+                    <a href="<?php echo wp_logout_url(); ?>"
+                        class="btn btn--small  btn--dark-orange float-left btn--with-photo">
+                        <span class="site-header__avatar"><?php echo get_avatar(get_current_user_id(), 60); ?></span>
+                        <span class="btn__text">Log Out</span>
+                    </a>
+                <?php } else { ?>
+                    <a href="<?php echo wp_login_url(); ?>"
+                        class="btn btn--small btn--orange float-left push-right">Login</a>
+                    <a href="<?php echo wp_registration_url(); ?>" class="btn btn--small  btn--dark-orange float-left">Sign
+                        Up</a>
+                <?php } ?>
+
             </div>
 
             <nav id="site-navigation" class="site-navigation">

@@ -44,6 +44,8 @@ function generic_outdoor_register_post_types()
 {
     // Products
     $product_args = array(
+        'capability_type' => 'product',
+        'map_meta_cap' => true,
         'show_in_rest' => true,
         'supports' => array('title', 'thumbnail'),
         'public' => true,
@@ -68,6 +70,8 @@ function generic_outdoor_register_post_types()
 
     // Services
     $service_args = array(
+        'capability_type' => 'service',
+        'map_meta_cap' => true,
         'show_in_rest' => true,
         'supports' => array('title', 'thumbnail'),
         'public' => true,
