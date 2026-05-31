@@ -1,3 +1,9 @@
+@use "../base/variables" as *;
+
 // Buttons
 .button, button { display: inline-block; padding: 8px 14px; border-radius: 4px; background: $brand-color; color: #fff; border: none; cursor: pointer; }
 .button--secondary { background: $accent-color; }
+
+.js-menu-toggle {
+ background-color: #fb2056;
+}

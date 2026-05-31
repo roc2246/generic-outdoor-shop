@@ -13,7 +13,7 @@
             <div class="site-branding">
                 <?php if (function_exists('the_custom_logo'))
                     the_custom_logo(); ?>
-                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
+                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>">Insert Logo Here</a>
                 </h1>
                 <p class="site-description"><?php bloginfo('description'); ?></p>
             </div>

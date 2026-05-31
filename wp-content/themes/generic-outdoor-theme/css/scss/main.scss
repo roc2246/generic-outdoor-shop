@@ -1,10 +1,10 @@
 // Main entry for Generic Outdoor theme styles
-@import 'base/variables';
-@import 'base/mixins';
-@import 'base/reset';
-@import 'base/base';
-@import 'layout/header';
-@import 'layout/footer';
-@import 'components/buttons';
-@import 'components/forms';
-@import 'utils/helpers';
+@use 'base/variables';
+@use 'base/mixins';
+@use 'base/reset';
+@use 'base/base';
+@use 'layout/header';
+@use 'layout/footer';
+@use 'components/buttons';
+@use 'components/forms';
+@use 'utils/helpers';

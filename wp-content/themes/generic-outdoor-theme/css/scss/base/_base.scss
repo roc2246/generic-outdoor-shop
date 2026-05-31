@@ -1,13 +1,58 @@
-// Base element styles
+@use "variables" as *;
+
+:root {
+  --brand-color: #{$brand-color};
+  --accent-color: #{$accent-color};
+  --muted: #{$muted};
+  --text-color: #{$text-color};
+  --background-color: #{$background-color};
+
+  --font-stack: #{$font-stack};
+
+  --container-padding: #{$container-padding};
+  --section-spacing: #{$section-spacing};
+
+  --font-base: #{$font-base};
+  --font-large: #{$font-large};
+  --font-xl: #{$font-xl};
+}
+
+html {
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: $font-stack;
-  color: #222;
-  background: #fff;
+  margin: 0;
+  font-family: var(--font-stack);
+  font-size: var(--font-base);
+  line-height: 1.6;
+  color: var(--text-color);
+  background: var(--background-color);
 }
 
-.site-header, .site-footer {
-  padding: $container-padding;
-  background: $muted;
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-a { color: $brand-color; }
+a {
+  color: var(--brand-color);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-color);
+}
+
+.site-header,
+.site-footer {
+  padding: var(--container-padding);
+  background: var(--muted);
+}
