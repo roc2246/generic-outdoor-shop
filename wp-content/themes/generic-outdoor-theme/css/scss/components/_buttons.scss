@@ -7,3 +7,17 @@
 .js-menu-toggle {
  background-color: #fb2056;
 }
+
+.menu-close-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1200;
+}

@@ -12,3 +12,12 @@ $section-spacing: 4rem;
 $font-base: 1rem;
 $font-large: 1.25rem;
 $font-xl: 2rem;
+
+$breakpoints: (
+  mobile-sm: 20rem,     // 320px
+  mobile: 30rem,        // 480px
+  tablet: 48rem,        // 768px
+  laptop: 64rem,        // 1024px
+  desktop: 80rem,       // 1280px
+  desktop-lg: 90rem     // 1440px
+);
