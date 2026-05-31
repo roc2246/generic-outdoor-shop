@@ -21,3 +21,42 @@
   cursor: pointer;
   z-index: 1200;
 }
+
+.search-overlay__close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  width: 3rem;
+  height: 3rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--background-color);
+
+  border: none;
+  border-radius: 50%;
+
+  color: var(--text-color);
+
+  cursor: pointer;
+
+  z-index: 2100;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.search-overlay__close:hover {
+  transform: scale(1.05);
+}
+
+.search-overlay__close svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
