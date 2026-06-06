@@ -5,11 +5,6 @@
  * Provides a custom REST endpoint for searching across multiple post types
  */
 
-use WP_Query;
-use WP_REST_Response;
-use WP_REST_Request;
-use WP_REST_SERVER;
-
 /**
  * Register the custom search endpoint.
  * 
@@ -18,7 +13,7 @@ use WP_REST_SERVER;
 function generic_outdoor_register_search()
 {
   register_rest_route('genericOutdoor/v1', 'search', array(
-    'methods' => WP_REST_SERVER::READABLE,
+    'methods' => \WP_REST_SERVER::READABLE,
     'callback' => 'generic_outdoor_search_results',
     'permission_callback' => function() {
       // Allow unauthenticated access but consider implementing rate limiting in production
@@ -31,9 +26,9 @@ add_action('rest_api_init', 'generic_outdoor_register_search');
 /**
  * Callback for the custom search REST endpoint.
  * 
- * @param WP_REST_Request $request The REST request object.
- * @return array|WP_REST_Response Combined results for products, services, and general info.
- * @throws WP_REST_Response 400 error if search term is too short.
+ * @param \WP_REST_Request $request The REST request object.
+ * @return array|\WP_REST_Response Combined results for products, services, and general info.
+ * @throws \WP_REST_Response 400 error if search term is too short.
  */
 function generic_outdoor_search_results($request)
 {
@@ -41,13 +36,13 @@ function generic_outdoor_search_results($request)
 
   // Validate search term
   if (empty($term) || strlen($term) < 2) {
-    return new WP_REST_Response(
+    return new \WP_REST_Response(
       array('error' => 'Search term must be at least 2 characters'),
       400
     );
   }
 
-  $mainQuery = new WP_Query(array(
+  $mainQuery = new \WP_Query(array(
     'post_type' => array('post', 'page', 'product', 'service'),
     's' => $term,
     'posts_per_page' => -1,
@@ -70,7 +65,7 @@ function generic_outdoor_search_results($request)
   if (!empty($productTypeTerms) && !is_wp_error($productTypeTerms)) {
     $termIds = wp_list_pluck($productTypeTerms, 'term_id');
     
-    $productQuery = new WP_Query(array(
+    $productQuery = new \WP_Query(array(
       'post_type' => 'product',
       'posts_per_page' => -1,
       'tax_query' => array(
