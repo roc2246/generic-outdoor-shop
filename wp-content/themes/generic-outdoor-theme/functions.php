@@ -293,4 +293,61 @@ function generic_shop_detail($args = []) {
 
     <?php
 }
+
+/**
+ * Modify the main search query to include custom post types and search by taxonomies
+ */
+function generic_outdoor_adjust_queries($query) {
+    if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+        // 1. Include products and services in the standard frontend search
+        $query->set('post_type', array('post', 'page', 'product', 'service'));
+    }
+}
+add_action('pre_get_posts', 'generic_outdoor_adjust_queries');
+
+/**
+ * Extend WordPress search to include taxonomy terms
+ * This joins the necessary tables to allow searching by category names, etc.
+ */
+function generic_outdoor_search_where($where) {
+    global $wpdb;
+
+    if (is_search() && !is_admin()) {
+        $query = get_search_query();
+        $query = $wpdb->esc_like($query);
+
+        // This adds an OR condition to the SQL WHERE clause to check term names
+        $where .= " OR (
+            t.name LIKE '%{$query}%'
+            AND {$wpdb->posts}.post_status = 'publish'
+        )";
+    }
+
+    return $where;
+}
+
+function generic_outdoor_search_join($join) {
+    global $wpdb;
+
+    if (is_search() && !is_admin()) {
+        // Join the terms and relationships tables so we can see term names
+        $join .= " LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id
+                   LEFT JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+                   LEFT JOIN {$wpdb->terms} t ON tt.term_id = t.term_id";
+    }
+
+    return $join;
+}
+
+function generic_outdoor_search_distinct($distinct) {
+    if (is_search() && !is_admin()) {
+        // Prevent duplicate results if a post matches on both title and category
+        return "DISTINCT";
+    }
+    return $distinct;
+}
+
+add_filter('posts_join', 'generic_outdoor_search_join');
+add_filter('posts_where', 'generic_outdoor_search_where');
+add_filter('posts_distinct', 'generic_outdoor_search_distinct');
 ?>
