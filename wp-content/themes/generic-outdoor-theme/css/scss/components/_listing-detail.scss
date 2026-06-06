@@ -1,0 +1,52 @@
+.listing-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  margin-block: 2rem;
+
+  @media (min-width: 48rem) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__image {
+    flex: 1;
+
+    img {
+      display: block;
+      width: 100%;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__summary {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.75rem;
+    background: white;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent-color);
+  }
+
+  &__description {
+    color: #555;
+    line-height: 1.6;
+  }
+}
