@@ -12,13 +12,7 @@ pageBanner(array(
     <div class="grid">
       <?php while (have_posts()):
         the_post(); ?>
-        <?php
-        generic_shop_card([
-          'name_field' => 'product_name',
-          'price_field' => 'price',
-          'button_text' => 'View Product',
-        ]);
-        ?>
+        <?php get_template_part('template-parts/content', 'product'); ?>
       <?php endwhile; ?>
     </div>
 
