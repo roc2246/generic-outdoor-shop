@@ -1,0 +1,106 @@
+@use "../base/mixins" as *;
+@use "../base/variables" as *;
+
+.front-hero {
+  // Mobile-first default
+  min-height: 70vh;
+  background-image: url("../../build/images/front-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @include respond(tablet) {
+    min-height: 80vh;
+  }
+}
+
+.front-hero__overlay {
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, 
+      rgba(0, 0, 0, 0.72) 0%, 
+      rgba(0, 0, 0, 0.48) 45%, 
+      rgba(0, 0, 0, 0.2) 100%
+    );
+
+  @media (max-width: 48rem) {
+    background: rgba(0, 0, 0, 0.58);
+  }
+}
+
+.front-hero__content {
+  max-width: 44rem;
+  color: var(--color-background);
+  padding-block: var(--spacing-xxl); // Using spacing tokens
+
+  @include respond(tablet) {
+    padding-block: 5rem;
+  }
+}
+
+.front-hero__eyebrow {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.front-hero__title {
+  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.95;
+}
+
+.front-hero__text {
+  max-width: 36rem;
+  margin-bottom: 2rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.front-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  @include transition(transform); // Respects reduced motion
+}
+
+.button--primary {
+  background: var(--color-brand);
+  color: var(--color-background);
+}
+
+.button--secondary {
+  border: 2px solid currentColor;
+  color: var(--color-background);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:focus-visible {
+  @include focus-ring();
+  transform: translateY(-2px);
+}
+
+.front-hero__actions {
+  @media (max-width: 48rem) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

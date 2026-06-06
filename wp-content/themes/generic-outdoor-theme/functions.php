@@ -259,7 +259,7 @@ function generic_shop_detail($args = []) {
             <div class="<?php echo esc_attr($wrapper_class); ?>__image">
                 <img
                     src="<?php echo esc_url(get_theme_file_uri('/build/images/default-image.jpg')); ?>"
-                    alt="<?php echo esc_attr('No image available'); ?>">
+                    alt="<?php esc_attr_e('No image available', 'generic-outdoor-theme'); ?>">
             </div>
         <?php endif; ?>
 
