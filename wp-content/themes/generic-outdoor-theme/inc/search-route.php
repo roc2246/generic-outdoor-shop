@@ -9,6 +9,11 @@ use WP_Query;
 use WP_REST_Response;
 use WP_REST_SERVER;
 
+/**
+ * Register the custom search endpoint.
+ * 
+ * Endpoint: wp-json/genericOutdoor/v1/search
+ */
 function generic_outdoor_register_search()
 {
   register_rest_route('genericOutdoor/v1', 'search', array(
@@ -22,6 +27,13 @@ function generic_outdoor_register_search()
 }
 add_action('rest_api_init', 'generic_outdoor_register_search');
 
+/**
+ * Callback for the custom search REST endpoint.
+ * 
+ * @param WP_REST_Request $request The REST request object.
+ * @return array|WP_REST_Response Combined results for products, services, and general info.
+ * @throws WP_REST_Response 400 error if search term is too short.
+ */
 function generic_outdoor_search_results($request)
 {
   $term = sanitize_text_field($request->get_param('term'));

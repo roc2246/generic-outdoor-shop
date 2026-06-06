@@ -3,6 +3,11 @@
 require get_theme_file_path('/inc/acf-fields.php');
 require get_theme_file_path('/inc/search-route.php');
 
+/**
+ * Register custom fields for the REST API.
+ * 
+ * Adds the ACF 'price' field to the standard 'product' post type response.
+ */
 function generic_outdoor_theme_custom_rest()
 {
   register_rest_field('product', 'price', array(
@@ -14,6 +19,11 @@ function generic_outdoor_theme_custom_rest()
 
 add_action('rest_api_init', 'generic_outdoor_theme_custom_rest');
 
+/**
+ * Enqueue theme styles and scripts.
+ * 
+ * Uses filemtime for stylesheet versioning and wp_localize_script for AJAX/REST URLs.
+ */
 function generic_outdoor_theme_enqueue_styles()
 {
   wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/build/index.css'), array(), filemtime(get_theme_file_path('/build/index.css')));
@@ -33,6 +43,11 @@ function generic_outdoor_theme_enqueue_styles()
 }
 add_action('wp_enqueue_scripts', 'generic_outdoor_theme_enqueue_styles');
 
+/**
+ * Theme Setup.
+ * 
+ * Registers theme support for core features and navigation menus.
+ */
 function generic_outdoor_theme_setup()
 {
   add_theme_support('title-tag');
@@ -152,6 +167,15 @@ function generic_outdoor_login_header_title()
   return get_bloginfo('name');
 }
 
+/**
+ * Display a shop item card.
+ * 
+ * @param array $args {
+ *     @type string $name_field  Optional ACF field for the name.
+ *     @type string $price_field Optional ACF field for the price.
+ *     @type string $button_text Text for the CTA button.
+ * }
+ */
 function generic_shop_card($args = []) {
     $defaults = [
         'name_field'  => '',
