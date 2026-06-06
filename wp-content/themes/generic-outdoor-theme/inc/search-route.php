@@ -7,6 +7,7 @@
 
 use WP_Query;
 use WP_REST_Response;
+use WP_REST_Request;
 use WP_REST_SERVER;
 
 /**
