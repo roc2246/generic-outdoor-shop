@@ -99,7 +99,7 @@ if (!function_exists('pageBanner')) {
       <div class="page-banner__content container">
         <<?php echo $heading_tag; ?> class="page-banner__title">
           <?php echo esc_html($args['title']); ?>
-        </<?php echo $heading_tag; ?>
+        </<?php echo $heading_tag; ?>>
 
         <?php if (!empty($args['subtitle'])): ?>
           <p class="page-banner__subtitle">
