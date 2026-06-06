@@ -1,7 +1,6 @@
 <?php
 
 require get_theme_file_path('/inc/acf-fields.php');
-require get_theme_file_path('/inc/custom-post-types.php');
 require get_theme_file_path('/inc/search-route.php');
 
 function generic_outdoor_theme_custom_rest()
