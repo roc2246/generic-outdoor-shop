@@ -5,6 +5,10 @@
  * Provides a custom REST endpoint for searching across multiple post types
  */
 
+use WP_Query;
+use WP_REST_Response;
+use WP_REST_SERVER;
+
 function generic_outdoor_register_search()
 {
   register_rest_route('genericOutdoor/v1', 'search', array(
