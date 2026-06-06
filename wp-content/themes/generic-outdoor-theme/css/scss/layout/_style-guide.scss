@@ -1,0 +1,426 @@
+/**
+ * Style Guide Component
+ * Styling for the component showcase and design system documentation page
+ */
+
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
+// Main style guide container
+.style-guide {
+  background: $background-color;
+  padding-block: $section-spacing;
+
+  // Intro section at top
+  &__intro {
+    text-align: center;
+    margin-bottom: $section-spacing;
+    padding-bottom: $section-spacing;
+    border-bottom: 2px solid $muted;
+  }
+
+  &__title {
+    margin-bottom: 0.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: $brand-color;
+  }
+
+  &__subtitle {
+    font-size: $font-large;
+    color: $text-secondary;
+    margin-bottom: 1rem;
+    font-weight: $font-weight-medium;
+  }
+
+  &__description {
+    max-width: 50rem;
+    margin-inline: auto;
+    color: $text-secondary;
+    line-height: 1.8;
+  }
+
+  // Section styling
+  &__section {
+    margin-bottom: $section-spacing;
+    padding-bottom: $section-spacing;
+    border-bottom: 1px solid $muted;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__section-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.5rem;
+    color: $text-color;
+    font-weight: $font-weight-bold;
+  }
+
+  &__section-description {
+    color: $text-secondary;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+
+  // Code blocks
+  &__code-block {
+    display: block;
+    padding: 1rem;
+    background: $muted;
+    border-left: 4px solid $brand-color;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    color: $text-color;
+    line-height: 1.5;
+  }
+
+  &__note {
+    font-size: 0.9rem;
+    color: $text-secondary;
+    font-style: italic;
+    margin-top: 0.75rem;
+  }
+}
+
+// ============================================
+// COLOR SWATCHES
+// ============================================
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.color-swatch {
+  background: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+  @include transition(box-shadow, $transition-normal);
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  &__color {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0.5rem;
+  }
+
+  &__name {
+    margin: 1rem 1rem 0.5rem;
+    font-size: 1.1rem;
+    font-weight: $font-weight-bold;
+    color: $text-color;
+  }
+
+  &__code {
+    display: block;
+    padding: 0 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: $brand-color;
+    font-weight: $font-weight-medium;
+  }
+
+  &__usage {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: $text-secondary;
+    margin: 0;
+  }
+}
+
+// ============================================
+// TYPOGRAPHY SHOWCASE
+// ============================================
+.style-guide__typography {
+  > * + * {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid $muted;
+  }
+
+  &-item {
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0 0 1rem 0;
+    }
+  }
+}
+
+// ============================================
+// COMPONENT GRID
+// ============================================
+.style-guide__component-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.style-guide__component {
+  background: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 1.5rem;
+  @include transition(box-shadow, $transition-normal);
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: $text-color;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.style-guide__preview {
+  padding: 1.5rem;
+  background: $muted;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  button,
+  a {
+    margin: 0;
+  }
+}
+
+.style-guide__code-example {
+  background: $muted;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+
+  p {
+    margin: 0 0 1rem 0;
+  }
+}
+
+// ============================================
+// FORM STYLING
+// ============================================
+.style-guide__form-example {
+  background: $muted;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 50rem;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.style-guide__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: $font-weight-medium;
+    color: $text-color;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 0.75rem;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+
+    &:focus {
+      outline: 2px solid $brand-color;
+      outline-offset: 2px;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  > label {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: $font-weight-normal;
+
+    input[type='checkbox'],
+    input[type='radio'] {
+      width: auto;
+      margin: 0;
+    }
+  }
+}
+
+// ============================================
+// SPACING VISUALIZATION
+// ============================================
+.style-guide__spacing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @include respond(mobile) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond(tablet) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.style-guide__spacing-item {
+  text-align: center;
+
+  p {
+    margin: 1rem 0 0 0;
+    font-size: 0.9rem;
+    color: $text-secondary;
+  }
+}
+
+.style-guide__spacing-box {
+  display: inline-block;
+  background: $brand-color;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+// ============================================
+// UTILITIES GRID
+// ============================================
+.style-guide__utilities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+
+  h3 {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 1.25rem;
+    color: $text-color;
+    font-weight: $font-weight-bold;
+  }
+
+  code {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    background: $muted;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: $brand-color;
+    font-weight: $font-weight-medium;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// ============================================
+// GRID DEMO
+// ============================================
+.style-guide__grid-demo {
+  padding: 2rem;
+  background: linear-gradient(135deg, $brand-color, darken($brand-color, 5%));
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-bold;
+  min-height: 150px;
+  @include transition(transform, $transition-normal);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+// ============================================
+// PRINCIPLES GRID
+// ============================================
+.style-guide__principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.style-guide__principle {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba($brand-color, 0.05), rgba($accent-color, 0.05));
+  border-left: 4px solid $brand-color;
+  border-radius: 8px;
+  @include transition(transform, $transition-normal);
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: $shadow-sm;
+  }
+
+  h3 {
+    margin: 0 0 0.75rem 0;
+    color: $brand-color;
+    font-size: 1.1rem;
+    font-weight: $font-weight-bold;
+  }
+
+  p {
+    margin: 0;
+    color: $text-secondary;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+// ============================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================
+@include respond(tablet) {
+  .style-guide {
+    &__section {
+      padding-bottom: 3rem;
+      margin-bottom: 3rem;
+    }
+  }
+
+  .color-grid {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+
+  .style-guide__component-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include respond(laptop) {
+  .style-guide__component-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
