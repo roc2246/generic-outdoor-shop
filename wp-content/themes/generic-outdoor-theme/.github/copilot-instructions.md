@@ -11,6 +11,3 @@ Follow the documentation in:
 * `.ai/wordpress-best-practices.md`
 * `.ai/employer-review-checklist.md`
 
-After making code changes:
-
-* Provide a concise Git commit message summarizing the changes.
