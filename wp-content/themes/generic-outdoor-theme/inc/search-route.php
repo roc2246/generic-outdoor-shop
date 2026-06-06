@@ -10,7 +10,10 @@ function generic_outdoor_register_search()
   register_rest_route('genericOutdoor/v1', 'search', array(
     'methods' => WP_REST_SERVER::READABLE,
     'callback' => 'generic_outdoor_search_results',
-    'permission_callback' => '__return_true',
+    'permission_callback' => function() {
+      // Allow unauthenticated access but consider implementing rate limiting in production
+      return apply_filters('genericOutdoor/allow_public_search', true);
+    },
   ));
 }
 add_action('rest_api_init', 'generic_outdoor_register_search');
@@ -33,42 +36,46 @@ function generic_outdoor_search_results($request)
     'posts_per_page' => -1,
   ));
 
+  // Get product type terms for combined query
   $productTypeTerms = get_terms(array(
     'taxonomy' => 'product_type',
     'hide_empty' => false,
     'search' => $term,
   ));
 
-  $productsByType = array();
-
+  $tax_query = array();
   if (!empty($productTypeTerms) && !is_wp_error($productTypeTerms)) {
     $termIds = wp_list_pluck($productTypeTerms, 'term_id');
-
-    $productTypeQuery = new WP_Query(array(
-      'post_type' => 'product',
-      'posts_per_page' => -1,
-      'tax_query' => array(
-        array(
-          'taxonomy' => 'product_type',
-          'field' => 'term_id',
-          'terms' => $termIds,
-        ),
+    $tax_query = array(
+      array(
+        'taxonomy' => 'product_type',
+        'field' => 'term_id',
+        'terms' => $termIds,
       ),
-    ));
-
-    while ($productTypeQuery->have_posts()) {
-      $productTypeQuery->the_post();
-
-      $productsByType[get_the_ID()] = array(
-        'title' => get_the_title(),
-        'permalink' => get_the_permalink(),
-        'postType' => get_post_type(),
-        'price' => get_field('price'),
-      );
-    }
-
-    wp_reset_postdata();
+    );
   }
+
+  // Single query combining both search and taxonomy filtering
+  $productQuery = new WP_Query(array(
+    'post_type' => 'product',
+    'posts_per_page' => -1,
+    's' => $term,
+    'tax_query' => $tax_query,
+  ));
+
+  $productsByType = array();
+  while ($productQuery->have_posts()) {
+    $productQuery->the_post();
+
+    $productsByType[get_the_ID()] = array(
+      'title' => get_the_title(),
+      'permalink' => get_the_permalink(),
+      'postType' => get_post_type(),
+      'price' => get_field('price'),
+    );
+  }
+
+  wp_reset_postdata();
 
   $results = array(
     'generalInfo' => array(),

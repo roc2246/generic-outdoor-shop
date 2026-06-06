@@ -61,6 +61,90 @@ class Search {
     this.previousValue = value;
   }
 
+  renderResults(results) {
+    // Clear results container
+    while (this.resultsDiv.firstChild) {
+      this.resultsDiv.removeChild(this.resultsDiv.firstChild);
+    }
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    // General Information section
+    const generalSection = this.createSection('General Information', results.generalInfo, (item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = item.permalink;
+      a.textContent = item.title;
+      li.appendChild(a);
+
+      if (item.postType === 'post' && item.authorName) {
+        const byText = document.createTextNode(` by ${item.authorName}`);
+        li.appendChild(byText);
+      }
+
+      return li;
+    });
+    row.appendChild(generalSection);
+
+    // Products section
+    const productsSection = this.createSection('Products', results.products, (item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = item.permalink;
+      a.textContent = item.title;
+      li.appendChild(a);
+
+      if (item.price) {
+        const span = document.createElement('span');
+        span.textContent = ` - $${item.price}`;
+        li.appendChild(span);
+      }
+
+      return li;
+    });
+    row.appendChild(productsSection);
+
+    // Services section
+    const servicesSection = this.createSection('Services', results.services, (item) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = item.permalink;
+      a.textContent = item.title;
+      li.appendChild(a);
+
+      return li;
+    });
+    row.appendChild(servicesSection);
+
+    this.resultsDiv.appendChild(row);
+  }
+
+  createSection(title, items, renderItem) {
+    const section = document.createElement('div');
+    section.className = 'one-third';
+
+    const heading = document.createElement('h2');
+    heading.className = 'search-overlay__section-title';
+    heading.textContent = title;
+    section.appendChild(heading);
+
+    if (items.length === 0) {
+      const emptyMsg = document.createElement('p');
+      emptyMsg.textContent = `No ${title.toLowerCase()} match that search.`;
+      section.appendChild(emptyMsg);
+    } else {
+      const ul = document.createElement('ul');
+      ul.className = 'link-list min-list';
+      items.forEach((item) => {
+        ul.appendChild(renderItem(item));
+      });
+      section.appendChild(ul);
+    }
+
+    return section;
+  }
+
   async getResults() {
     try {
       const base = wpSite.root_url;
@@ -75,92 +159,14 @@ class Search {
       }
 
       const results = await response.json();
-
-      this.resultsDiv.innerHTML = `
-        <div class="row">
-          <div class="one-third">
-            <h2 class="search-overlay__section-title">General Information</h2>
-
-            ${
-              results.generalInfo.length
-                ? `<ul class="link-list min-list">`
-                : `<p>No general information matches that search.</p>`
-            }
-
-            ${results.generalInfo
-              .map(
-                (item) => `
-                  <li>
-                    <a href="${item.permalink}">
-                      ${item.title}
-                    </a>
-                    ${
-                      item.postType === "post" && item.authorName
-                        ? ` by ${item.authorName}`
-                        : ""
-                    }
-                  </li>
-                `,
-              )
-              .join("")}
-
-            ${results.generalInfo.length ? `</ul>` : ``}
-          </div>
-
-          <div class="one-third">
-            <h2 class="search-overlay__section-title">Products</h2>
-
-            ${
-              results.products.length
-                ? `<ul class="link-list min-list">`
-                : `<p>No products match that search.</p>`
-            }
-
-            ${results.products
-              .map(
-                (item) => `
-                  <li>
-                    <a href="${item.permalink}">
-                      ${item.title}
-                    </a>
-                    ${item.price ? `<span> - $${item.price}</span>` : ""}
-                  </li>
-                `,
-              )
-              .join("")}
-
-            ${results.products.length ? `</ul>` : ``}
-          </div>
-
-          <div class="one-third">
-            <h2 class="search-overlay__section-title">Services</h2>
-
-            ${
-              results.services.length
-                ? `<ul class="link-list min-list">`
-                : `<p>No services match that search.</p>`
-            }
-
-            ${results.services
-              .map(
-                (item) => `
-                  <li>
-                    <a href="${item.permalink}">
-                      ${item.title}
-                    </a>
-                  </li>
-                `,
-              )
-              .join("")}
-
-            ${results.services.length ? `</ul>` : ``}
-          </div>
-        </div>
-      `;
-
+      this.renderResults(results);
       this.isSpinnerVisible = false;
     } catch (err) {
-      this.resultsDiv.innerHTML = "<p>Unexpected error; please try again.</p>";
+      console.error('Search failed:', err);
+      const errorMsg = document.createElement('p');
+      errorMsg.textContent = 'Search unavailable. Please try again.';
+      this.resultsDiv.innerHTML = '';
+      this.resultsDiv.appendChild(errorMsg);
       this.isSpinnerVisible = false;
     }
   }

@@ -93,14 +93,22 @@ if (!function_exists('pageBanner')) {
 }
 
 
+/**
+ * Check if the current user has only the subscriber role
+ *
+ * @return bool True if user is a subscriber, false otherwise.
+ */
+function generic_outdoor_user_is_subscriber() {
+  $user = wp_get_current_user();
+  return count($user->roles) === 1 && $user->roles[0] === 'subscriber';
+}
+
 // Redirect subscriber accounts out of admin and onto homepage
 add_action('admin_init', 'generic_outdoor_redirect_subs_to_frontend');
 
 function generic_outdoor_redirect_subs_to_frontend()
 {
-  $ourCurrentUser = wp_get_current_user();
-
-  if (count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+  if (generic_outdoor_user_is_subscriber()) {
     wp_redirect(site_url('/'));
     exit;
   }
@@ -110,9 +118,7 @@ add_action('wp_loaded', 'generic_outdoor_no_subs_admin_bar');
 
 function generic_outdoor_no_subs_admin_bar()
 {
-  $ourCurrentUser = wp_get_current_user();
-
-  if (count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+  if (generic_outdoor_user_is_subscriber()) {
     show_admin_bar(false);
   }
 }
@@ -129,8 +135,8 @@ add_action('login_enqueue_scripts', 'generic_outdoor_login_enqueue_styles');
 
 function generic_outdoor_login_enqueue_styles()
 {
-  wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
-  wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+  wp_enqueue_style('custom-google-fonts', 'https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+  wp_enqueue_style('font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
   wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/build/index.css'));
 }
 
@@ -282,3 +288,4 @@ function generic_shop_detail($args = []) {
 
     <?php
 }
+?>
