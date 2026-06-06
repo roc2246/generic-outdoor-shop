@@ -19,10 +19,10 @@ while (have_posts()) {
 
     <?php
     generic_shop_detail([
-      'wrapper_class' => 'product-detail',
-      'name_field' => 'product_name',
-      'description_field' => 'product_description',
-    ]);
+    'name_field' => 'product_name',
+    'price_field' => 'price',
+    'description_field' => 'product_description',
+]);
     ?>
 
     <?php if (function_exists('get_field')): ?>

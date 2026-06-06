@@ -19,11 +19,12 @@ while (have_posts()) {
 
     <?php
     generic_shop_detail([
-      'wrapper_class' => 'service-detail',
+      'name_field' => 'service_name',
+      'price_field' => 'service_price',
       'description_field' => 'service_description',
     ]);
     ?>
-    
+
     <?php if (function_exists('get_field')): ?>
       <?php $related_services = get_field('related_services'); ?>
       <?php if ($related_services): ?>
