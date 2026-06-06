@@ -116,3 +116,63 @@ function ourLoginTitle()
 {
   return get_bloginfo('name');
 }
+
+
+
+function display_listing_card(
+    $name_field = null,
+    $description_field = null
+) {
+    ?>
+    <div class="listing-card">
+
+        <?php if (has_post_thumbnail()) : ?>
+            <div class="listing-card__image">
+                <?php the_post_thumbnail('large'); ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="listing-card__summary">
+
+            <?php if (function_exists('get_field')) : ?>
+
+                <?php if ($name_field) : ?>
+                    <?php $name = get_field($name_field); ?>
+
+                    <?php if ($name) : ?>
+                        <p class="listing-card__name">
+                            <?php echo esc_html($name); ?>
+                        </p>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <?php $price = get_field('price'); ?>
+
+                <?php if ($price) : ?>
+                    <p class="listing-card__price">
+                        Price: <?php echo esc_html($price); ?>
+                    </p>
+                <?php endif; ?>
+
+                <?php if ($description_field) : ?>
+                    <?php $description = get_field($description_field); ?>
+
+                    <?php if ($description) : ?>
+                        <p class="listing-card__description">
+                            Description:
+                            <?php echo esc_html($description); ?>
+                        </p>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+            <?php endif; ?>
+
+            <div class="generic-content">
+                <?php the_content(); ?>
+            </div>
+
+        </div>
+
+    </div>
+    <?php
+}
