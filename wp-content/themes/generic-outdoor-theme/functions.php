@@ -12,7 +12,7 @@ function generic_outdoor_theme_custom_rest()
 {
   register_rest_field('product', 'price', array(
     'get_callback' => function ($post) {
-      return get_field('price', $post['id']);
+      return get_field(GENERIC_OUTDOOR_PRODUCT_PRICE_FIELD, $post['id']);
     }
   ));
 }

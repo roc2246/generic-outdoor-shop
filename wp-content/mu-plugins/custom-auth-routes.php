@@ -66,7 +66,7 @@ add_action('init', function () {
     if ($request === CUSTOM_REGISTER_SLUG) {
 
         wp_safe_redirect(
-            site_url('wp-login.php?action=register', 'login')
+            add_query_arg('action', 'register', wp_login_url())
         );
 
         exit;
