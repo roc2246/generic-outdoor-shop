@@ -83,7 +83,7 @@ function generic_outdoor_search_results($request)
         'title' => get_the_title(),
         'permalink' => get_the_permalink(),
         'postType' => get_post_type(),
-        'price' => function_exists('get_field') ? get_field('price') : null,
+        'price' => function_exists('get_field') ? get_field(GENERIC_OUTDOOR_PRODUCT_PRICE_FIELD) : null,
       );
     }
     wp_reset_postdata();
@@ -100,10 +100,10 @@ function generic_outdoor_search_results($request)
     );
 
     if ($postType === 'product') {
-      $item['price'] = function_exists('get_field') ? get_field('price') : null;
+      $item['price'] = function_exists('get_field') ? get_field(GENERIC_OUTDOOR_PRODUCT_PRICE_FIELD) : null;
       $results['products'][get_the_ID()] = $item;
     } elseif ($postType === 'service') {
-      $item['price'] = function_exists('get_field') ? get_field('service_price') : null;
+      $item['price'] = function_exists('get_field') ? get_field(GENERIC_OUTDOOR_SERVICE_PRICE_FIELD) : null;
       $results['services'][] = $item;
     } else {
       $item['authorName'] = get_the_author();
