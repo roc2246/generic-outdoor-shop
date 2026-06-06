@@ -47,7 +47,17 @@ body {
 .site {
   display: flex;
   flex-direction: column;
+  // Accounts for the WP Admin Bar height if present
   min-height: 100vh;
+  min-height: 100dvh; // Use dynamic viewport height for mobile browsers
+
+  body.admin-bar & {
+    min-height: calc(100vh - 32px);
+
+    @media screen and (max-width: 782px) {
+      min-height: calc(100vh - 46px);
+    }
+  }
 }
 
 img {
