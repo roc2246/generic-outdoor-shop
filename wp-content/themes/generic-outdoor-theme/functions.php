@@ -171,3 +171,71 @@ function generic_shop_card($args = []) {
 
     <?php
 }
+
+
+function generic_shop_detail($args = []) {
+
+    $defaults = [
+        'wrapper_class' => 'listing-detail',
+        'name_field' => '',
+        'price_field' => 'price',
+        'description_field' => '',
+    ];
+
+    $args = wp_parse_args($args, $defaults);
+
+    $name = function_exists('get_field') && $args['name_field']
+        ? get_field($args['name_field'])
+        : null;
+
+    $price = function_exists('get_field')
+        ? get_field($args['price_field'])
+        : null;
+
+    $description = function_exists('get_field') && $args['description_field']
+        ? get_field($args['description_field'])
+        : null;
+    ?>
+
+    <div class="<?php echo esc_attr($args['wrapper_class']); ?>">
+
+        <?php if (has_post_thumbnail()) : ?>
+            <div class="<?php echo esc_attr($args['wrapper_class']); ?>__image">
+                <?php the_post_thumbnail('large'); ?>
+            </div>
+            <?php else : ?>
+                <div class="<?php echo esc_attr($args['wrapper_class']); ?>__image">
+                    <img src="<?php echo get_theme_file_uri('/build/images/default-image.jpg'); ?>" alt="No image available">
+                </div>
+        <?php endif; ?>
+
+        <div class="<?php echo esc_attr($args['wrapper_class']); ?>__summary">
+
+            <?php if ($name) : ?>
+                <p class="<?php echo esc_attr($args['wrapper_class']); ?>__name">
+                    <?php echo esc_html($name); ?>
+                </p>
+            <?php endif; ?>
+
+            <?php if ($price) : ?>
+                <p class="<?php echo esc_attr($args['wrapper_class']); ?>__price">
+                    Price: <?php echo esc_html($price); ?>
+                </p>
+            <?php endif; ?>
+
+            <?php if ($description) : ?>
+                <p class="<?php echo esc_attr($args['wrapper_class']); ?>__description">
+                    Description: <?php echo esc_html($description); ?>
+                </p>
+            <?php endif; ?>
+
+            <div class="generic-content">
+                <?php the_content(); ?>
+            </div>
+
+        </div>
+
+    </div>
+
+    <?php
+}

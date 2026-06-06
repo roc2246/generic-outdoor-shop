@@ -12,43 +12,59 @@ pageBanner(array(
 
 <div class="container container--narrow page-section">
 
-    <?php if (have_posts()): ?>
+    <?php if (have_posts()) : ?>
 
         <div class="grid">
 
-            <?php while (have_posts()): the_post(); ?>
+            <?php while (have_posts()) : the_post(); ?>
 
                 <article class="card">
 
                     <div class="card__content">
 
-                        <!-- TITLE (generic fallback) -->
                         <h2 class="card__title">
-                            <?php the_title(); ?>
+                            <a href="<?php the_permalink(); ?>">
+                                <?php the_title(); ?>
+                            </a>
                         </h2>
 
-                        <!-- IMAGE -->
                         <a class="card__image-link" href="<?php the_permalink(); ?>">
-                            <?php if (has_post_thumbnail()): ?>
+
+                            <?php if (has_post_thumbnail()) : ?>
+
                                 <?php the_post_thumbnail('medium'); ?>
-                            <?php else: ?>
-                                <div class="card__placeholder">No image available</div>
+
+                            <?php else : ?>
+
+                                <div class="card__placeholder">
+                                    No image available
+                                </div>
+
                             <?php endif; ?>
+
                         </a>
 
-                        <!-- EXCERPT -->
                         <p class="card__excerpt">
-                            <?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 25); ?>
+                            <?php echo esc_html(
+                                wp_trim_words(
+                                    get_the_excerpt() ?: get_the_content(),
+                                    25
+                                )
+                            ); ?>
                         </p>
 
-                        <!-- ACF PRICE (generic-safe) -->
-                        <?php if (function_exists('get_field')): ?>
+                        <?php if (function_exists('get_field')) : ?>
+
                             <?php $price = get_field('price'); ?>
-                            <?php if ($price): ?>
+
+                            <?php if ($price) : ?>
+
                                 <p class="card__price">
                                     Price: <?php echo esc_html($price); ?>
                                 </p>
+
                             <?php endif; ?>
+
                         <?php endif; ?>
 
                         <a class="button button--primary" href="<?php the_permalink(); ?>">
@@ -65,7 +81,7 @@ pageBanner(array(
 
         <?php the_posts_pagination(); ?>
 
-    <?php else: ?>
+    <?php else : ?>
 
         <p>No items found at this time.</p>
 
