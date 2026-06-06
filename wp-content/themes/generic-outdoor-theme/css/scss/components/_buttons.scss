@@ -1,62 +1,25 @@
 @use "../base/variables" as *;
 
-// Buttons
-.button, button { display: inline-block; padding: 8px 14px; border-radius: 4px; background: $brand-color; color: #fff; border: none; cursor: pointer; }
-.button--secondary { background: $accent-color; }
-
-.js-menu-toggle {
- background-color: #fb2056;
-}
-
-.menu-close-button {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-
-  background: transparent;
+.button, button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  background: $brand-color;
+  color: #fff;
   border: none;
-  color: var(--text-color);
-  font-size: 2rem;
-  line-height: 1;
   cursor: pointer;
-  z-index: 1200;
-}
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
 
-.search-overlay__close {
-  position: fixed;
-  top: 1.5rem;
-  right: 1.5rem;
+  &:hover {
+    background: darken($brand-color, 8%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 
-  width: 3rem;
-  height: 3rem;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  background: var(--background-color);
-
-  border: none;
-  border-radius: 50%;
-
-  color: var(--text-color);
-
-  cursor: pointer;
-
-  z-index: 2100;
-
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.search-overlay__close:hover {
-  transform: scale(1.05);
-}
-
-.search-overlay__close svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  &:focus {
+    outline: 2px solid $accent-color;
+    outline-offset: 2px;
+  }
 }
