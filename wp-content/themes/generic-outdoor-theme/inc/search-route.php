@@ -47,74 +47,66 @@ function generic_outdoor_search_results($request)
     'search' => $term,
   ));
 
-  $tax_query = array();
-  if (!empty($productTypeTerms) && !is_wp_error($productTypeTerms)) {
-    $termIds = wp_list_pluck($productTypeTerms, 'term_id');
-    $tax_query = array(
-      array(
-        'taxonomy' => 'product_type',
-        'field' => 'term_id',
-        'terms' => $termIds,
-      ),
-    );
-  }
-
-  // Single query combining both search and taxonomy filtering
-  $productQuery = new WP_Query(array(
-    'post_type' => 'product',
-    'posts_per_page' => -1,
-    's' => $term,
-    'tax_query' => $tax_query,
-  ));
-
-  $productsByType = array();
-  while ($productQuery->have_posts()) {
-    $productQuery->the_post();
-
-    $productsByType[get_the_ID()] = array(
-      'title' => get_the_title(),
-      'permalink' => get_the_permalink(),
-      'postType' => get_post_type(),
-      'price' => get_field('price'),
-    );
-  }
-
-  wp_reset_postdata();
-
   $results = array(
     'generalInfo' => array(),
     'products' => array(),
     'services' => array(),
   );
 
+  // If we found category matches, fetch products in those categories first
+  if (!empty($productTypeTerms) && !is_wp_error($productTypeTerms)) {
+    $termIds = wp_list_pluck($productTypeTerms, 'term_id');
+    
+    $productQuery = new WP_Query(array(
+      'post_type' => 'product',
+      'posts_per_page' => -1,
+      'tax_query' => array(
+      array(
+        'taxonomy' => 'product_type',
+        'field' => 'term_id',
+        'terms' => $termIds,
+      ),
+      )
+    ));
+
+    while ($productQuery->have_posts()) {
+      $productQuery->the_post();
+      $results['products'][get_the_ID()] = array(
+        'title' => get_the_title(),
+        'permalink' => get_the_permalink(),
+        'postType' => get_post_type(),
+        'price' => function_exists('get_field') ? get_field('price') : null,
+      );
+    }
+    wp_reset_postdata();
+  }
+
   while ($mainQuery->have_posts()) {
     $mainQuery->the_post();
+    $postType = get_post_type();
 
     $item = array(
       'title' => get_the_title(),
       'permalink' => get_the_permalink(),
-      'postType' => get_post_type(),
-      'authorName' => get_the_author(),
+      'postType' => $postType,
     );
 
-    if (get_post_type() === 'product') {
-      $item['price'] = get_field('price');
+    if ($postType === 'product') {
+      $item['price'] = function_exists('get_field') ? get_field('price') : null;
       $results['products'][get_the_ID()] = $item;
-    } elseif (get_post_type() === 'service') {
+    } elseif ($postType === 'service') {
+      $item['price'] = function_exists('get_field') ? get_field('service_price') : null;
       $results['services'][] = $item;
     } else {
+      $item['authorName'] = get_the_author();
       $results['generalInfo'][] = $item;
     }
   }
 
   wp_reset_postdata();
 
-  foreach ($productsByType as $id => $product) {
-    $results['products'][$id] = $product;
-  }
-
+  // Convert to indexed array for clean JSON response
   $results['products'] = array_values($results['products']);
-
 
   return $results;
 }
