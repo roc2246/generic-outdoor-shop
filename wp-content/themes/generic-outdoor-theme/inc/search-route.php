@@ -1,19 +1,31 @@
 <?php
+/**
+ * Custom REST API Search Route
+ *
+ * Provides a custom REST endpoint for searching across multiple post types
+ */
 
-
-function genericOutdoorRegisterSearch()
+function generic_outdoor_register_search()
 {
   register_rest_route('genericOutdoor/v1', 'search', array(
     'methods' => WP_REST_SERVER::READABLE,
-    'callback' => 'genericOutdoorSearchResults',
+    'callback' => 'generic_outdoor_search_results',
     'permission_callback' => '__return_true',
   ));
 }
-add_action('rest_api_init', 'genericOutdoorRegisterSearch');
+add_action('rest_api_init', 'generic_outdoor_register_search');
 
-function genericOutdoorSearchResults($request)
+function generic_outdoor_search_results($request)
 {
-  $term = sanitize_text_field($request['term']);
+  $term = sanitize_text_field($request->get_param('term'));
+
+  // Validate search term
+  if (empty($term) || strlen($term) < 2) {
+    return new WP_REST_Response(
+      array('error' => 'Search term must be at least 2 characters'),
+      400
+    );
+  }
 
   $mainQuery = new WP_Query(array(
     'post_type' => array('post', 'page', 'product', 'service'),

@@ -1,5 +1,7 @@
 <?php
 
+require get_theme_file_path('/inc/acf-fields.php');
+require get_theme_file_path('/inc/custom-post-types.php');
 require get_theme_file_path('/inc/search-route.php');
 
 function generic_outdoor_theme_custom_rest()
@@ -36,6 +38,16 @@ function generic_outdoor_theme_setup()
 {
   add_theme_support('title-tag');
   add_theme_support('custom-logo');
+  add_theme_support('html5', array(
+    'search-form',
+    'comment-form',
+    'comment-list',
+    'gallery',
+    'caption',
+    'script',
+    'style',
+  ));
+  add_theme_support('responsive-embeds');
   register_nav_menus(array(
     'primary' => __('Primary Menu', 'generic-outdoor-theme'),
   ));
@@ -43,19 +55,32 @@ function generic_outdoor_theme_setup()
 add_action('after_setup_theme', 'generic_outdoor_theme_setup');
 
 if (!function_exists('pageBanner')) {
+  /**
+   * Display a page banner/header
+   *
+   * @param array $args {
+   *     Optional. Array of banner arguments.
+   *     @type string $title    The banner title. Defaults to archive title or post title.
+   *     @type string $subtitle Optional subtitle text.
+   *     @type string $heading_level HTML heading level (h1-h6). Default 'h1'. Should only be h1 once per page.
+   * }
+   */
   function pageBanner($args = array())
   {
     $args = wp_parse_args($args, array(
       'title' => is_archive() ? post_type_archive_title('', false) : get_the_title(),
       'subtitle' => '',
+      'heading_level' => 'h1',
     ));
+
+    $heading_tag = sanitize_key($args['heading_level']);
 
     ?>
     <div class="page-banner">
       <div class="page-banner__content container">
-        <h1 class="page-banner__title">
+        <<?php echo $heading_tag; ?> class="page-banner__title">
           <?php echo esc_html($args['title']); ?>
-        </h1>
+        </<?php echo $heading_tag; ?>
 
         <?php if (!empty($args['subtitle'])): ?>
           <p class="page-banner__subtitle">
@@ -70,9 +95,9 @@ if (!function_exists('pageBanner')) {
 
 
 // Redirect subscriber accounts out of admin and onto homepage
-add_action('admin_init', 'redirectSubsToFrontend');
+add_action('admin_init', 'generic_outdoor_redirect_subs_to_frontend');
 
-function redirectSubsToFrontend()
+function generic_outdoor_redirect_subs_to_frontend()
 {
   $ourCurrentUser = wp_get_current_user();
 
@@ -82,9 +107,9 @@ function redirectSubsToFrontend()
   }
 }
 
-add_action('wp_loaded', 'noSubsAdminBar');
+add_action('wp_loaded', 'generic_outdoor_no_subs_admin_bar');
 
-function noSubsAdminBar()
+function generic_outdoor_no_subs_admin_bar()
 {
   $ourCurrentUser = wp_get_current_user();
 
@@ -94,25 +119,25 @@ function noSubsAdminBar()
 }
 
 // Customize Login Screen
-add_filter('login_headerurl', 'ourHeaderUrl');
+add_filter('login_headerurl', 'generic_outdoor_login_header_url');
 
-function ourHeaderUrl()
+function generic_outdoor_login_header_url()
 {
   return esc_url(site_url('/'));
 }
 
-add_action('login_enqueue_scripts', 'ourLoginCSS');
+add_action('login_enqueue_scripts', 'generic_outdoor_login_enqueue_styles');
 
-function ourLoginCSS()
+function generic_outdoor_login_enqueue_styles()
 {
   wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
   wp_enqueue_style('generic-outdoor-style', get_theme_file_uri('/build/index.css'));
 }
 
-add_filter('login_headertitle', 'ourLoginTitle');
+add_filter('login_headertitle', 'generic_outdoor_login_header_title');
 
-function ourLoginTitle()
+function generic_outdoor_login_header_title()
 {
   return get_bloginfo('name');
 }
@@ -144,11 +169,11 @@ function generic_shop_card($args = []) {
                 </a>
             </h2>
 
-            <a class="card__image-link" href="<?php the_permalink(); ?>">
+            <a class="card__image-link" href="<?php the_permalink(); ?>" aria-label="View <?php echo esc_attr($name ?: get_the_title()); ?>">
                 <?php if (has_post_thumbnail()) : ?>
                     <?php the_post_thumbnail('medium'); ?>
                 <?php else : ?>
-                    <img class="card__placeholder" src="<?php echo get_theme_file_uri('/build/images/default-image.jpg'); ?>" alt="No image available">
+                    <img class="card__placeholder" src="<?php echo esc_url(get_theme_file_uri('/build/images/default-image.jpg')); ?>" alt="No image available for <?php echo esc_attr($name ?: get_the_title()); ?>">
                 <?php endif; ?>
             </a>
 
@@ -162,7 +187,7 @@ function generic_shop_card($args = []) {
                 </p>
             <?php endif; ?>
 
-            <a class="button button--primary" href="<?php the_permalink(); ?>">
+            <a class="button button--primary" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr($args['button_text'] . ' - ' . ($name ?: get_the_title())); ?>">
                 <?php echo esc_html($args['button_text']); ?>
             </a>
 
@@ -172,7 +197,17 @@ function generic_shop_card($args = []) {
     <?php
 }
 
-
+/**
+ * Display a product or service detail view
+ *
+ * @param array $args {
+ *     Optional. Array of detail view arguments.
+ *     @type string $wrapper_class The CSS class for the wrapper. Default 'listing-detail'.
+ *     @type string $name_field ACF field name for the item name. Default ''.
+ *     @type string $price_field ACF field name for the price. Default 'price'.
+ *     @type string $description_field ACF field name for the description. Default ''.
+ * }
+ */
 function generic_shop_detail($args = []) {
     $defaults = [
         'wrapper_class'     => 'listing-detail',
