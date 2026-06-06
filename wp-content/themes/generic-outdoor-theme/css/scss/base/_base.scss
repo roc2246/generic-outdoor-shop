@@ -43,6 +43,13 @@ body {
   background: var(--background-color);
 }
 
+// The main site wrapper must be a flex container to push the footer down
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 img {
   max-width: 100%;
   height: auto;

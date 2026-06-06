@@ -48,11 +48,11 @@
     </div>
     <?php } ?>
     
-
+    <main class="site-main">
     <div class="generic-content">
       <?php get_search_form(); ?>
     </div>
-
+    </main>
   </div>
     
   <?php }

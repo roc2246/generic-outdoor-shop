@@ -7,6 +7,7 @@ pageBanner(array(
 ));
 ?>
 
+<main class="site-main">
 <div class="container container--narrow page-section">
   <?php
   get_search_form();
@@ -25,6 +26,7 @@ pageBanner(array(
   ?>
 
 </div>
+</main>
 
 <?php get_footer();
 
