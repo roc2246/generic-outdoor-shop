@@ -1,6 +1,18 @@
 /**
  * Card Component
  * Reusable card layout with hover effects and responsive image handling
+ * 
+ * @example
+ * <div class="card">
+ *   <a class="card__image-link" href="#">
+ *     <img src="product.jpg" alt="Product name" />
+ *   </a>
+ *   <div class="card__content">
+ *     <h3>Product Title</h3>
+ *     <p class="card__excerpt">Brief description of the product</p>
+ *     <button class="button">View Details</button>
+ *   </div>
+ * </div>
  */
 
 @use "../base/variables" as *;
@@ -11,12 +23,12 @@
   flex-direction: column;
   height: 100%;
 
-  background: $background-color;
-  border: 1px solid $border-color;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
   border-radius: 0.75rem;
   overflow: hidden;
 
-  box-shadow: $shadow-md;
+  box-shadow: var(--shadow-md);
 
   @include transition((transform, box-shadow), $transition-normal);
 
@@ -24,7 +36,7 @@
   &:focus-within {
     transform: translateY(-4px);
 
-    box-shadow: $shadow-lg;
+    box-shadow: var(--shadow-lg);
   }
 
   &__content {

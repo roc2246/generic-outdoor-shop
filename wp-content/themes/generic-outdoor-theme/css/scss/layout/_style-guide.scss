@@ -3,6 +3,7 @@
  * Styling for the component showcase and design system documentation page
  */
 
+@use "sass:color";
 @use "../base/variables" as *;
 @use "../base/mixins" as *;
 
@@ -348,7 +349,7 @@
 // ============================================
 .style-guide__grid-demo {
   padding: 2rem;
-  background: linear-gradient(135deg, $brand-color, darken($brand-color, 5%));
+  background: linear-gradient(135deg, $brand-color, color.adjust($brand-color, $lightness: -5%));
   color: #fff;
   border-radius: 8px;
   display: flex;

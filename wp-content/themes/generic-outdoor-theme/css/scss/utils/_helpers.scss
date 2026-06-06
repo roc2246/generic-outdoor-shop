@@ -1,58 +1,183 @@
 /**
  * Utility Helpers
  * Reusable utility classes for common styling patterns
- * Follows a consistent naming convention: .u-{property}{-modifier}
+ * Naming convention: .u-{property}{-modifier}
+ * 
+ * Generated from design tokens (spacing, colors, etc.) for consistency
+ * All utilities use !important to ensure they take precedence
  */
 
+@use "sass:map";
 @use "../base/variables" as *;
 @use "../base/mixins" as *;
 
-// Display utilities
+// ============================================================================
+// Display Utilities
+// ============================================================================
+
 .u-hidden { display: none !important; }
 .u-inline { display: inline !important; }
 .u-inline-block { display: inline-block !important; }
 .u-block { display: block !important; }
 .u-flex { display: flex !important; }
 .u-grid { display: grid !important; }
+.u-invisible { visibility: hidden !important; }
 
-// Flexbox utilities
+// ============================================================================
+// Flexbox Utilities
+// ============================================================================
+
 .u-flex-center {
   @include flex-center();
 }
 
 .u-flex-between {
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: space-between;
 }
 
-// Text utilities
+.u-flex-column {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.u-flex-wrap {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.u-flex-gap-sm {
+  gap: var(--spacing-sm) !important;
+}
+
+.u-flex-gap-md {
+  gap: var(--spacing-md) !important;
+}
+
+.u-flex-gap-lg {
+  gap: var(--spacing-lg) !important;
+}
+
+// ============================================================================
+// Text Utilities
+// ============================================================================
+
 .u-text-center { text-align: center !important; }
 .u-text-right { text-align: right !important; }
 .u-text-left { text-align: left !important; }
 
-.u-font-bold { font-weight: $font-weight-bold !important; }
-.u-font-medium { font-weight: $font-weight-medium !important; }
-.u-font-normal { font-weight: $font-weight-normal !important; }
+.u-font-bold { font-weight: var(--font-weight-bold) !important; }
+.u-font-medium { font-weight: var(--font-weight-medium) !important; }
+.u-font-normal { font-weight: var(--font-weight-normal) !important; }
 
-// Spacing utilities - margins
-.u-mb { margin-bottom: 1rem !important; }
-.u-mb-sm { margin-bottom: 0.5rem !important; }
-.u-mb-md { margin-bottom: 1.5rem !important; }
-.u-mb-lg { margin-bottom: 2rem !important; }
+// ============================================================================
+// Spacing Utilities - Generated from $spacing map
+// ============================================================================
 
-.u-mt { margin-top: 1rem !important; }
-.u-mt-sm { margin-top: 0.5rem !important; }
-.u-mt-md { margin-top: 1.5rem !important; }
-.u-mt-lg { margin-top: 2rem !important; }
+// Margin utilities (using spacing scale)
+@each $key, $value in $spacing {
+  .u-m-#{$key} { margin: $value !important; }
+  .u-mt-#{$key} { margin-top: $value !important; }
+  .u-mb-#{$key} { margin-bottom: $value !important; }
+  .u-ml-#{$key} { margin-left: $value !important; }
+  .u-mr-#{$key} { margin-right: $value !important; }
+  .u-mx-#{$key} { margin-left: $value !important; margin-right: $value !important; }
+  .u-my-#{$key} { margin-top: $value !important; margin-bottom: $value !important; }
+}
 
-// Spacing utilities - padding
-.u-p { padding: 1rem !important; }
-.u-p-sm { padding: 0.5rem !important; }
-.u-p-md { padding: 1.5rem !important; }
-.u-p-lg { padding: 2rem !important; }
+// Padding utilities (using spacing scale)
+@each $key, $value in $spacing {
+  .u-p-#{$key} { padding: $value !important; }
+  .u-pt-#{$key} { padding-top: $value !important; }
+  .u-pb-#{$key} { padding-bottom: $value !important; }
+  .u-pl-#{$key} { padding-left: $value !important; }
+  .u-pr-#{$key} { padding-right: $value !important; }
+  .u-px-#{$key} { padding-left: $value !important; padding-right: $value !important; }
+  .u-py-#{$key} { padding-top: $value !important; padding-bottom: $value !important; }
+}
 
-.u-pb { padding-bottom: 1rem !important; }
-.u-pt { padding-top: 1rem !important; }
-.u-px { padding-left: 1rem !important; padding-right: 1rem !important; }
-.u-py { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+// ============================================================================
+// Opacity Utilities
+// ============================================================================
+
+.u-opacity-0 { opacity: 0 !important; }
+.u-opacity-25 { opacity: 0.25 !important; }
+.u-opacity-50 { opacity: 0.5 !important; }
+.u-opacity-75 { opacity: 0.75 !important; }
+.u-opacity-100 { opacity: 1 !important; }
+
+// ============================================================================
+// Shadow Utilities
+// ============================================================================
+
+.u-shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.u-shadow-md { box-shadow: var(--shadow-md) !important; }
+.u-shadow-lg { box-shadow: var(--shadow-lg) !important; }
+.u-shadow-xl { box-shadow: var(--shadow-xl) !important; }
+.u-shadow-none { box-shadow: none !important; }
+
+// ============================================================================
+// Border Utilities
+// ============================================================================
+
+.u-border { border: 1px solid var(--color-border) !important; }
+.u-border-t { border-top: 1px solid var(--color-border) !important; }
+.u-border-b { border-bottom: 1px solid var(--color-border) !important; }
+.u-border-l { border-left: 1px solid var(--color-border) !important; }
+.u-border-r { border-right: 1px solid var(--color-border) !important; }
+.u-border-none { border: none !important; }
+
+.u-rounded { border-radius: 0.75rem !important; }
+.u-rounded-sm { border-radius: 0.375rem !important; }
+.u-rounded-lg { border-radius: 1rem !important; }
+.u-rounded-full { border-radius: 9999px !important; }
+
+// ============================================================================
+// Overflow & Visibility
+// ============================================================================
+
+.u-overflow-hidden { overflow: hidden !important; }
+.u-overflow-visible { overflow: visible !important; }
+.u-overflow-auto { overflow: auto !important; }
+
+.u-whitespace-nowrap { white-space: nowrap !important; }
+.u-whitespace-wrap { white-space: normal !important; }
+
+.u-truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+// ============================================================================
+// Width & Height Utilities
+// ============================================================================
+
+.u-w-full { width: 100% !important; }
+.u-h-full { height: 100% !important; }
+.u-h-auto { height: auto !important; }
+.u-w-auto { width: auto !important; }
+
+.u-max-w-full { max-width: 100% !important; }
+
+// ============================================================================
+// Position & Placement
+// ============================================================================
+
+.u-relative { position: relative !important; }
+.u-absolute { position: absolute !important; }
+.u-fixed { position: fixed !important; }
+.u-static { position: static !important; }
+
+// ============================================================================
+// Accessibility Utilities
+// ============================================================================
+
+/**
+ * Visually hide elements while keeping them accessible to screen readers
+ * Use for skip links, aria-labels, and off-screen content
+ */
+.u-sr-only {
+  @include visually-hidden();
+}

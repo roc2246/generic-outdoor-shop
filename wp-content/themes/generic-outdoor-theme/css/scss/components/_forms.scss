@@ -1,10 +1,23 @@
 /**
  * Forms Component
  * Search overlay and form styling
+ * 
+ * @example
+ * <div class="search-overlay">
+ *   <div class="search-overlay__top">
+ *     <div class="container">
+ *       <svg class="search-overlay__icon">...</svg>
+ *       <input type="search" class="search-term" placeholder="Search..." />
+ *       <button class="search-overlay__close">×</button>
+ *     </div>
+ *   </div>
+ *   <div id="search-overlay__results"></div>
+ * </div>
  */
 
 @use "../base/variables" as *;
 @use "../base/mixins" as *;
+@use "../base/z-index" as *;
 
 .search-overlay {
   position: fixed;
@@ -15,7 +28,7 @@
 
   background: rgba(255, 255, 255, 0.98);
 
-  z-index: 2000;
+  z-index: z(tooltip);
 
   opacity: 0;
   visibility: hidden;
@@ -33,7 +46,7 @@
 
   &__top {
     padding: 2rem 0;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .container {
@@ -42,13 +55,13 @@
 
   &__icon {
     font-size: 2rem;
-    color: var(--brand-color);
+    color: var(--color-brand);
   }
 
   &__close {
     font-size: 2rem;
     cursor: pointer;
-    color: var(--text-color);
+    color: var(--color-text);
     flex-shrink: 0;
     @include transition(opacity, $transition-normal);
 
@@ -60,7 +73,7 @@
 
   &__section-title {
     margin-bottom: 1rem;
-    font-weight: $font-weight-medium;
+    font-weight: var(--font-weight-medium);
   }
 }
 
@@ -78,7 +91,7 @@
 
   &:focus {
     outline: none;
-    color: $brand-color;
+    color: var(--color-brand);
   }
 }
 

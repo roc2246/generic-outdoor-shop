@@ -2,10 +2,17 @@
  * Buttons Component
  * Primary and secondary action buttons with interactive states
  * Includes focus states for accessibility
+ * 
+ * @example
+ * <button class="button">Primary Action</button>
+ * <button class="button button--secondary">Secondary Action</button>
+ * <button class="button" disabled>Disabled Action</button>
  */
 
+@use "sass:color";
 @use "../base/variables" as *;
 @use "../base/mixins" as *;
+@use "../base/z-index" as *;
 
 // Primary button
 .button,
@@ -13,18 +20,18 @@ button {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
-  background: $brand-color;
+  background: var(--color-brand);
   color: #fff;
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: $font-weight-medium;
+  font-weight: var(--font-weight-medium);
   @include transition(all, $transition-normal);
 
   &:hover {
-    background: darken($brand-color, 8%);
+    background: color.scale(#1b6b34, $lightness: -10%);
     transform: translateY(-2px);
-    box-shadow: $shadow-lg;
+    box-shadow: var(--shadow-lg);
   }
 
   &:focus {
@@ -33,7 +40,7 @@ button {
 
   &:active {
     transform: translateY(0);
-    box-shadow: $shadow-md;
+    box-shadow: var(--shadow-md);
   }
 
   &:disabled {
@@ -45,21 +52,21 @@ button {
 
 // Secondary button variant
 .button--secondary {
-  background: $accent-color;
+  background: var(--color-accent);
 
   &:hover {
-    background: darken($accent-color, 8%);
+    background: color.scale(#ff6b35, $lightness: -10%);
   }
 }
 
 // Menu toggle button
 .js-menu-toggle {
-  background-color: $accent-color;
+  background-color: var(--color-accent);
   color: #fff;
   @include transition(background-color, $transition-normal);
 
   &:hover {
-    background-color: darken($accent-color, 8%);
+    background-color: color.scale(#ff6b35, $lightness: -10%);
   }
 
   &:focus {
@@ -75,7 +82,7 @@ button {
 
   background: transparent;
   border: none;
-  color: var(--text-color);
+  color: var(--color-text);
   font-size: 2rem;
   line-height: 1;
   cursor: pointer;

@@ -1,0 +1,31 @@
+/**
+ * Z-Index Scale
+ * Centralized z-index management to prevent stacking context conflicts
+ * Use the map to maintain order and consistency across the application
+ */
+
+@use "sass:map";
+
+$z-index: (
+  base: 0,
+  dropdown: 100,
+  sticky: 500,
+  modal-backdrop: 900,
+  modal: 1000,
+  tooltip: 2000,
+  notification: 2100
+);
+
+/**
+ * Get z-index value by name
+ * @param {String} $name - The z-index level name
+ * @return {Number} The z-index value
+ */
+@function z($name) {
+  @if map.has-key($z-index, $name) {
+    @return map.get($z-index, $name);
+  } @else {
+    @warn "Z-index level '#{$name}' not found. Available levels: #{map.keys($z-index)}";
+    @return 0;
+  }
+}

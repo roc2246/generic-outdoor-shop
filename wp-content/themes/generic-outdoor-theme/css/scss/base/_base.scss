@@ -3,6 +3,7 @@
  * Core document styles and foundational typography
  */
 
+@use "sass:color";
 @use "variables" as *;
 @use "mixins" as *;
 
@@ -80,7 +81,7 @@ select {
   @include transition((border-color, box-shadow, outline), $transition-fast);
 
   &:hover {
-    border-color: darken($border-color, 10%);
+    border-color: color.adjust($border-color, $lightness: -10%);
   }
 
   &:focus {

@@ -60,16 +60,42 @@
 /**
  * Focus states
  * Provides accessible focus styling for interactive elements
+ * Includes fallback for browsers that don't support outline-offset
  */
 @mixin focus-ring($color: $accent-color, $offset: 2px) {
   outline: 2px solid $color;
   outline-offset: $offset;
+  
+  // Fallback for browsers without outline-offset support
+  @supports not (outline-offset: 0) {
+    box-shadow: 0 0 0 3px rgba($color, 0.5);
+  }
 }
 
 /**
  * Smooth transitions
  * Apply consistent transition timing
+ * Respects user preference for reduced motion
  */
 @mixin transition($property: all, $duration: $transition-normal) {
   transition: $property $duration;
+  
+  // Disable animations for users who prefer reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/**
+ * Respect user preference for reduced motion
+ * Use this mixin to disable all animations and transitions within a selector
+ */
+@mixin reduce-motion {
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

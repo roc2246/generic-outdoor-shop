@@ -5,15 +5,16 @@
 
 @use "../base/variables" as *;
 @use "../base/mixins" as *;
+@use "../base/z-index" as *;
 
 .site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  background: var(--background-color);
+  background: var(--color-background);
   position: relative;
-  z-index: 1100;
+  z-index: z(base);
 }
 
 .site-branding {
@@ -88,11 +89,11 @@
   inset: 0;
   width: 100%;
   min-height: 100vh;
-  background: var(--background-color);
+  background: var(--color-background);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: z(modal);
 
   opacity: 0;
   visibility: hidden;

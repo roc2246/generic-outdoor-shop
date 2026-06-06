@@ -1,6 +1,7 @@
 /**
  * Main Content Layout
  * Content containers and page section spacing
+ * Uses CSS custom properties for themeable background colors
  */
 
 @use "../base/variables" as *;
@@ -25,14 +26,14 @@
 }
 
 .page-section {
-  padding-block: 2rem;
+  padding-block: var(--spacing-lg);
 }
 
 .page-section--hero {
-  padding-block: 4rem;
-  background: $muted;
+  padding-block: var(--spacing-xxl);
+  background: var(--color-muted);
 }
 
 .page-section--featured {
-  padding-block: 3rem;
+  padding-block: var(--spacing-xl);
 }

@@ -1,6 +1,7 @@
 /**
  * Grid Layout
  * Responsive grid system for product/service listings
+ * Uses CSS Grid with auto-fit for responsive column count
  */
 
 @use "../base/variables" as *;
@@ -19,17 +20,20 @@
 @include respond(mobile) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
 @include respond(tablet) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
   }
 }
 
 @include respond(laptop) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 }
