@@ -15,3 +15,4 @@ When helping with this project:
 - Keep solutions beginner-to-intermediate friendly
 - Prefer practical production-ready patterns
 - Suggest a concise Git commit message after making code changes
+    - Example: Git commit message: [Insert message here]
