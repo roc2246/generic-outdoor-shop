@@ -1,4 +1,10 @@
+/**
+ * Base Styles
+ * Core document styles and foundational typography
+ */
+
 @use "variables" as *;
+@use "mixins" as *;
 
 :root {
   --brand-color: #{$brand-color};
@@ -39,16 +45,18 @@ body {
 img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 a {
   color: var(--brand-color);
   text-decoration: none;
-}
+  @include transition(color, $transition-fast);
 
-a:hover,
-a:focus {
-  color: var(--accent-color);
+  &:hover,
+  &:focus {
+    color: var(--accent-color);
+  }
 }
 
 .site-header,
@@ -57,15 +65,40 @@ a:focus {
   background: var(--muted);
 }
 
-// Form styles
+/**
+ * Form Elements
+ * Consistent styling for form inputs and controls
+ */
 input,
 textarea,
 select {
-  padding: 8px;
-  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border: 1px solid $border-color;
   border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  @include transition((border-color, box-shadow, outline), $transition-fast);
+
+  &:hover {
+    border-color: darken($border-color, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $brand-color;
+    box-shadow: 0 0 0 3px rgba($brand-color, 0.1);
+  }
+
+  &:disabled {
+    background-color: $muted;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
+
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 0.5rem;
+  font-weight: $font-weight-medium;
+  color: $text-color;
 }

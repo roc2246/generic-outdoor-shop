@@ -1,7 +1,35 @@
+/**
+ * Grid Layout
+ * Responsive grid system for product/service listings
+ */
+
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
 .grid {
   display: grid;
   gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(18rem, 1fr));
+.grid--dense {
+  grid-auto-flow: dense;
+}
+
+@include respond(mobile) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include respond(tablet) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include respond(laptop) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

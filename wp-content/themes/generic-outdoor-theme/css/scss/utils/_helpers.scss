@@ -1,3 +1,58 @@
-// Utility helpers
+/**
+ * Utility Helpers
+ * Reusable utility classes for common styling patterns
+ * Follows a consistent naming convention: .u-{property}{-modifier}
+ */
+
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
+// Display utilities
 .u-hidden { display: none !important; }
-.u-mb { margin-bottom: 1rem; }
+.u-inline { display: inline !important; }
+.u-inline-block { display: inline-block !important; }
+.u-block { display: block !important; }
+.u-flex { display: flex !important; }
+.u-grid { display: grid !important; }
+
+// Flexbox utilities
+.u-flex-center {
+  @include flex-center();
+}
+
+.u-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Text utilities
+.u-text-center { text-align: center !important; }
+.u-text-right { text-align: right !important; }
+.u-text-left { text-align: left !important; }
+
+.u-font-bold { font-weight: $font-weight-bold !important; }
+.u-font-medium { font-weight: $font-weight-medium !important; }
+.u-font-normal { font-weight: $font-weight-normal !important; }
+
+// Spacing utilities - margins
+.u-mb { margin-bottom: 1rem !important; }
+.u-mb-sm { margin-bottom: 0.5rem !important; }
+.u-mb-md { margin-bottom: 1.5rem !important; }
+.u-mb-lg { margin-bottom: 2rem !important; }
+
+.u-mt { margin-top: 1rem !important; }
+.u-mt-sm { margin-top: 0.5rem !important; }
+.u-mt-md { margin-top: 1.5rem !important; }
+.u-mt-lg { margin-top: 2rem !important; }
+
+// Spacing utilities - padding
+.u-p { padding: 1rem !important; }
+.u-p-sm { padding: 0.5rem !important; }
+.u-p-md { padding: 1.5rem !important; }
+.u-p-lg { padding: 2rem !important; }
+
+.u-pb { padding-bottom: 1rem !important; }
+.u-pt { padding-top: 1rem !important; }
+.u-px { padding-left: 1rem !important; padding-right: 1rem !important; }
+.u-py { padding-top: 1rem !important; padding-bottom: 1rem !important; }

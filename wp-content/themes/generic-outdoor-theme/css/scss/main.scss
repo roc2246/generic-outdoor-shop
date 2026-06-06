@@ -1,4 +1,19 @@
-// Main entry for Generic Outdoor theme styles
+/**
+ * Main Stylesheet
+ * Generic Outdoor Theme - Professional WordPress theme
+ *
+ * Architecture:
+ * - base/       : Variables, mixins, reset, and foundational styles
+ * - layout/     : Header, footer, main content containers, and grid system
+ * - components/ : Reusable UI components (buttons, cards, forms, etc.)
+ * - utils/      : Utility classes for common styling patterns
+ *
+ * Usage:
+ * This file serves as the entry point that imports and organizes all SCSS modules.
+ * The theme follows BEM (Block, Element, Modifier) naming conventions and SMACSS principles.
+ * All custom properties use CSS variables for runtime theme customization.
+ */
+
 @use 'base/variables';
 @use 'base/mixins';
 @use 'base/reset';

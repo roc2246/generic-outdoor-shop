@@ -1,3 +1,11 @@
+/**
+ * Forms Component
+ * Search overlay and form styling
+ */
+
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
 .search-overlay {
   position: fixed;
   inset: 0;
@@ -15,9 +23,7 @@
 
   overflow-y: auto;
 
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
+  @include transition((opacity, visibility), $transition-slow);
 
   &--active {
     opacity: 1;
@@ -27,12 +33,11 @@
 
   &__top {
     padding: 2rem 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $border-color;
   }
 
   .container {
-    width: min(100% - 2rem, 75rem);
-    margin-inline: auto;
+    @include container();
   }
 
   &__icon {
@@ -45,10 +50,17 @@
     cursor: pointer;
     color: var(--text-color);
     flex-shrink: 0;
+    @include transition(opacity, $transition-normal);
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
   }
 
   &__section-title {
     margin-bottom: 1rem;
+    font-weight: $font-weight-medium;
   }
 }
 
@@ -63,6 +75,11 @@
   font-size: clamp(1.25rem, 3vw, 2rem);
 
   padding: 0 1rem;
+
+  &:focus {
+    outline: none;
+    color: $brand-color;
+  }
 }
 
 .search-overlay__top .container {

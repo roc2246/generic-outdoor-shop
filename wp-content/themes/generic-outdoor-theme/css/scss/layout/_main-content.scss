@@ -1,3 +1,10 @@
+/**
+ * Main Content Layout
+ * Content containers and page section spacing
+ */
+
+@use "../base/variables" as *;
+
 .site-main {
   width: 100%;
 }
@@ -9,8 +16,23 @@
 
 .container--narrow {
   width: min(100% - 2rem, 50rem);
+  margin-inline: auto;
+}
+
+.container--wide {
+  width: min(100% - 2rem, 75rem);
+  margin-inline: auto;
 }
 
 .page-section {
   padding-block: 2rem;
+}
+
+.page-section--hero {
+  padding-block: 4rem;
+  background: $muted;
+}
+
+.page-section--featured {
+  padding-block: 3rem;
 }

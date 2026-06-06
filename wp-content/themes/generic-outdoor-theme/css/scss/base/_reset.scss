@@ -1,14 +1,29 @@
-/* Minimal reset */
+/**
+ * Reset Styles
+ * Minimal reset to normalize default browser styles
+ * Removes default margins, paddings, and list styles
+ */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 ul, ol, li,
 form, label, table, caption, tbody, tfoot, thead, tr, th, td {
-  margin: 0; padding: 0; border: 0; vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
 }
 
-body { line-height: 1; }
+body {
+  line-height: 1;
+}
 
-ol, ul { list-style: none; }
+ol, ul {
+  list-style: none;
+}
 
-img { max-width: 100%; height: auto; }
+img {
+  max-width: 100%;
+  height: auto;
+}

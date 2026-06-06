@@ -1,3 +1,9 @@
+/**
+ * Header Layout
+ * Responsive site header with navigation and controls
+ */
+
+@use "../base/variables" as *;
 @use "../base/mixins" as *;
 
 .site-header {
@@ -42,6 +48,13 @@
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
+  @include transition((opacity, color), $transition-normal);
+
+  &:hover,
+  &:focus {
+    opacity: 0.7;
+    @include focus-ring();
+  }
 }
 
 .menu-toggle-icon {
@@ -85,7 +98,7 @@
   visibility: hidden;
   pointer-events: none;
 
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  @include transition((opacity, visibility), $transition-slow);
 
   &__controls{
     display: flex;

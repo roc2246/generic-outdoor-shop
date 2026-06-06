@@ -1,7 +1,15 @@
+/**
+ * Mixins
+ * Reusable SCSS functions for DRY code and consistent patterns
+ */
+
 @use "sass:map";
 @use "variables" as *;
 
-// Visually hidden (accessibility)
+/**
+ * Accessibility: Visually hide elements while keeping them in the DOM
+ * Useful for screen readers and keyboard navigation
+ */
 @mixin visually-hidden {
   position: absolute !important;
   width: 1px;
@@ -19,15 +27,49 @@
   border: 0;
 }
 
-// Responsive container
+/**
+ * Container
+ * Responsive container with max-width and centered margin
+ */
 @mixin container {
   width: min(100% - 2rem, 75rem);
   margin-inline: auto;
 }
 
-// Responsive breakpoints
+/**
+ * Responsive breakpoints
+ * Mobile-first media queries
+ * Usage: @include respond(tablet) { ... }
+ */
 @mixin respond($breakpoint) {
   @media (min-width: map.get($breakpoints, $breakpoint)) {
     @content;
   }
+}
+
+/**
+ * Flexbox utilities
+ * Center content both horizontally and vertically
+ */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/**
+ * Focus states
+ * Provides accessible focus styling for interactive elements
+ */
+@mixin focus-ring($color: $accent-color, $offset: 2px) {
+  outline: 2px solid $color;
+  outline-offset: $offset;
+}
+
+/**
+ * Smooth transitions
+ * Apply consistent transition timing
+ */
+@mixin transition($property: all, $duration: $transition-normal) {
+  transition: $property $duration;
 }

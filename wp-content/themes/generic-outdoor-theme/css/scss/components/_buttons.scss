@@ -1,6 +1,15 @@
-@use "../base/variables" as *;
+/**
+ * Buttons Component
+ * Primary and secondary action buttons with interactive states
+ * Includes focus states for accessibility
+ */
 
-.button, button {
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
+// Primary button
+.button,
+button {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
@@ -9,17 +18,116 @@
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  font-weight: $font-weight-medium;
+  @include transition(all, $transition-normal);
 
   &:hover {
     background: darken($brand-color, 8%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: $shadow-lg;
   }
 
   &:focus {
-    outline: 2px solid $accent-color;
-    outline-offset: 2px;
+    @include focus-ring();
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-md;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Secondary button variant
+.button--secondary {
+  background: $accent-color;
+
+  &:hover {
+    background: darken($accent-color, 8%);
+  }
+}
+
+// Menu toggle button
+.js-menu-toggle {
+  background-color: $accent-color;
+  color: #fff;
+  @include transition(background-color, $transition-normal);
+
+  &:hover {
+    background-color: darken($accent-color, 8%);
+  }
+
+  &:focus {
+    @include focus-ring();
+  }
+}
+
+// Menu close button
+.menu-close-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1200;
+  @include transition(opacity, $transition-normal);
+
+  &:hover,
+  &:focus {
+    opacity: 0.7;
+    @include focus-ring();
+  }
+}
+
+// Search overlay close button
+.search-overlay__close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  width: 3rem;
+  height: 3rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--background-color);
+
+  border: none;
+  border-radius: 50%;
+
+  color: var(--text-color);
+
+  cursor: pointer;
+
+  z-index: 2100;
+
+  box-shadow: $shadow-md;
+
+  @include transition((transform, opacity, box-shadow), $transition-normal);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: $shadow-lg;
+  }
+
+  &:focus {
+    @include focus-ring();
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
