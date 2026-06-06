@@ -117,62 +117,57 @@ function ourLoginTitle()
   return get_bloginfo('name');
 }
 
+function generic_shop_card($args = []) {
+    $defaults = [
+        'name_field'  => '',
+        'price_field' => '',
+        'button_text' => 'View Item',
+    ];
 
+    $args = wp_parse_args($args, $defaults);
 
-function display_listing_card(
-    $name_field = null,
-    $description_field = null
-) {
+    $name = function_exists('get_field') && $args['name_field']
+        ? get_field($args['name_field'])
+        : get_the_title();
+
+    $price = function_exists('get_field') && $args['price_field']
+        ? get_field($args['price_field'])
+        : null;
     ?>
-    <div class="listing-card">
 
-        <?php if (has_post_thumbnail()) : ?>
-            <div class="listing-card__image">
-                <?php the_post_thumbnail('large'); ?>
-            </div>
-        <?php endif; ?>
+    <article class="card">
+        <div class="card__content">
 
-        <div class="listing-card__summary">
+            <h2 class="card__title">
+                <a href="<?php the_permalink(); ?>">
+                    <?php echo esc_html($name ?: get_the_title()); ?>
+                </a>
+            </h2>
 
-            <?php if (function_exists('get_field')) : ?>
-
-                <?php if ($name_field) : ?>
-                    <?php $name = get_field($name_field); ?>
-
-                    <?php if ($name) : ?>
-                        <p class="listing-card__name">
-                            <?php echo esc_html($name); ?>
-                        </p>
-                    <?php endif; ?>
+            <a class="card__image-link" href="<?php the_permalink(); ?>">
+                <?php if (has_post_thumbnail()) : ?>
+                    <?php the_post_thumbnail('medium'); ?>
+                <?php else : ?>
+                    <img class="card__placeholder" src="<?php echo get_theme_file_uri('/build/images/default-image.jpg'); ?>" alt="No image available">
                 <?php endif; ?>
+            </a>
 
-                <?php $price = get_field('price'); ?>
+            <p class="card__excerpt">
+                <?php echo esc_html(wp_trim_words(get_the_excerpt() ?: get_the_content(), 25)); ?>
+            </p>
 
-                <?php if ($price) : ?>
-                    <p class="listing-card__price">
-                        Price: <?php echo esc_html($price); ?>
-                    </p>
-                <?php endif; ?>
-
-                <?php if ($description_field) : ?>
-                    <?php $description = get_field($description_field); ?>
-
-                    <?php if ($description) : ?>
-                        <p class="listing-card__description">
-                            Description:
-                            <?php echo esc_html($description); ?>
-                        </p>
-                    <?php endif; ?>
-                <?php endif; ?>
-
+            <?php if ($price) : ?>
+                <p class="card__price">
+                    Price: <?php echo esc_html($price); ?>
+                </p>
             <?php endif; ?>
 
-            <div class="generic-content">
-                <?php the_content(); ?>
-            </div>
+            <a class="button button--primary" href="<?php the_permalink(); ?>">
+                <?php echo esc_html($args['button_text']); ?>
+            </a>
 
         </div>
+    </article>
 
-    </div>
     <?php
 }

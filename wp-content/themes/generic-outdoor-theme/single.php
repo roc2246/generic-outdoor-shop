@@ -27,16 +27,16 @@ while (have_posts()) {
         </p>
     </div>
 
-    <div class="product-detail">
+    <div class="listing-card">
 
         <!-- FEATURED IMAGE -->
         <?php if (has_post_thumbnail()) : ?>
-            <div class="product-detail__image">
+            <div class="listing-card__image">
                 <?php the_post_thumbnail('large'); ?>
             </div>
         <?php endif; ?>
 
-        <div class="product-detail__summary">
+        <div class="listing-card__summary">
 
             <!-- ACF FIELDS (GENERIC SAFE) -->
             <?php if (function_exists('get_field')): ?>
@@ -45,7 +45,7 @@ while (have_posts()) {
                 $price = get_field('price');
                 if ($price):
                 ?>
-                    <p class="product-detail__price">
+                    <p class="listing-card__price">
                         Price: <?php echo esc_html($price); ?>
                     </p>
                 <?php endif; ?>
@@ -54,7 +54,7 @@ while (have_posts()) {
                 $description = get_field('description');
                 if ($description):
                 ?>
-                    <p class="product-detail__description">
+                    <p class="listing-card__description">
                         <?php echo esc_html($description); ?>
                     </p>
                 <?php endif; ?>
