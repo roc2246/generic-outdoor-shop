@@ -36,7 +36,12 @@ add_action('wp_enqueue_scripts', 'generic_outdoor_theme_enqueue_styles');
 function generic_outdoor_theme_setup()
 {
   add_theme_support('title-tag');
-  add_theme_support('custom-logo');
+  add_theme_support('custom-logo', array(
+    'height'      => 60,
+    'width'       => 180,
+    'flex-height' => true,
+    'flex-width'  => true,
+  ));
   add_theme_support('html5', array(
     'search-form',
     'comment-form',
