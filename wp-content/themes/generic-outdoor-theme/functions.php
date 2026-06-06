@@ -156,7 +156,7 @@ function generic_shop_card($args = []) {
     $defaults = [
         'name_field'  => '',
         'price_field' => '',
-        'button_text' => 'View Item',
+        'button_text' => __('View Item', 'generic-outdoor-theme'),
     ];
 
     $args = wp_parse_args($args, $defaults);
@@ -193,7 +193,7 @@ function generic_shop_card($args = []) {
 
             <?php if ($price) : ?>
                 <p class="card__price">
-                    Price: <?php echo esc_html($price); ?>
+                    <?php printf(esc_html__('Price: %s', 'generic-outdoor-theme'), esc_html($price)); ?>
                 </p>
             <?php endif; ?>
 
@@ -273,13 +273,13 @@ function generic_shop_detail($args = []) {
 
             <?php if ($price) : ?>
                 <p class="<?php echo esc_attr($wrapper_class); ?>__price">
-                    Price: <?php echo esc_html($price); ?>
+                    <?php printf(esc_html__('Price: %s', 'generic-outdoor-theme'), esc_html($price)); ?>
                 </p>
             <?php endif; ?>
 
             <?php if ($description) : ?>
                 <p class="<?php echo esc_attr($wrapper_class); ?>__description">
-                    Description: <?php echo esc_html($description); ?>
+                    <?php printf(esc_html__('Description: %s', 'generic-outdoor-theme'), esc_html($description)); ?>
                 </p>
             <?php endif; ?>
 
