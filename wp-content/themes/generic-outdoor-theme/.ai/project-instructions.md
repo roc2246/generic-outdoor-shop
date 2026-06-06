@@ -14,3 +14,4 @@ When helping with this project:
 - Avoid over-engineering
 - Keep solutions beginner-to-intermediate friendly
 - Prefer practical production-ready patterns
+- Suggest a concise Git commit message after making code changes

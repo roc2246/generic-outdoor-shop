@@ -1,24 +1,16 @@
 # Project Instructions
 
-This is a custom WordPress theme.
+This project uses the `.ai/` directory as the single source of truth.
 
-Use:
-- PHP with WordPress escaping functions
-- SCSS partials
-- BEM-style class names when reasonable
-- rem units instead of px when possible
-- accessible HTML
-- responsive layouts using modern CSS grid/flexbox
+Follow the documentation in:
 
-Do not:
-- over-engineer simple theme components
-- add plugins unless asked
-- rewrite unrelated files
+* `.ai/project-context.md`
+* `.ai/project-instructions.md`
+* `.ai/coding-standards.md`
+* `.ai/style-guide.md`
+* `.ai/wordpress-best-practices.md`
+* `.ai/employer-review-checklist.md`
 
-When explaining code:
-- explain it simply
-- focus on why the code works
-- point out what file the code belongs in
+After making code changes:
 
-After running a promt:
-- show me a commit message that describes the changes you made
+* Provide a concise Git commit message summarizing the changes.
