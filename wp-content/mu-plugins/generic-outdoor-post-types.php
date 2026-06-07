@@ -31,10 +31,6 @@ if (!defined('WPINC')) {
     die;
 }
 
-add_action('admin_notices', function () {
-    echo '<div class="notice notice-success is-dismissible"><p>Generic Outdoor MU plugin active.</p></div>';
-});
-
 // Add site-wide tweaks below
 
 /**
@@ -95,7 +91,7 @@ function generic_outdoor_register_post_types()
     register_post_type('service', $service_args);
 }
 
-function register_product_taxonomy()
+function generic_outdoor_register_taxonomies()
 {
     register_taxonomy('product_type', 'product', array(
         'label' => 'Product Type',
@@ -105,7 +101,6 @@ function register_product_taxonomy()
         'rewrite' => array('slug' => 'product-type'),
     ));
 }
-add_action('init', 'register_product_taxonomy');
 
 /**
  * Register custom post types: Products and Services
@@ -115,4 +110,7 @@ add_action('init', 'register_product_taxonomy');
  * registration arguments, use the filters documented above (`generic_outdoor_product_args`
  * and `generic_outdoor_service_args`).
  */
-add_action('init', 'generic_outdoor_register_post_types');
+add_action('init', function() {
+    generic_outdoor_register_post_types();
+    generic_outdoor_register_taxonomies();
+});
