@@ -1,0 +1,42 @@
+/**
+ * Owner Profile Component
+ *
+ * Handles the layout for the owner biography section on the About page.
+ */
+
+@use '../base/mixins' as *;
+
+.owner-profile {
+  &--responsive {
+    display: flow-root; // Contains the floated image within this container
+    margin-top: var(--spacing-xl);
+  }
+
+  &__image-container {
+    &--medium {
+      // Mobile-first: Centered column layout
+      float: none;
+      margin: 0 auto var(--spacing-md) auto;
+      width: 150px;
+      max-width: 100%;
+
+      // Tablet and up: Transition to text-wrap layout
+      @include respond(tablet) {
+        float: left;
+        width: 200px;
+        max-width: 40%;
+        margin: 0 var(--spacing-lg) var(--spacing-sm) 0;
+      }
+    }
+  }
+
+  &__image {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    display: block;
+  }
+}
