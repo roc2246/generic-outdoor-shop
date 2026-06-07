@@ -2,6 +2,16 @@
  * Owner Profile Component
  *
  * Handles the layout for the owner biography section on the About page.
+ * 
+ * @example
+ * <section class="owner-profile owner-profile--responsive">
+ *   <div class="owner-profile__image-container owner-profile__image-container--medium">
+ *     <img class="owner-profile__image" src="..." alt="Owner Name" />
+ *   </div>
+ *   <div class="owner-profile__content">
+ *     <p>Biography text goes here...</p>
+ *   </div>
+ * </section>
  */
 
 @use '../base/mixins' as *;

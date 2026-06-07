@@ -170,10 +170,11 @@ function generic_outdoor_login_header_title()
 /**
  * Display a shop item card.
  * 
- * @param array $args {
- *     @type string $name_field  Optional ACF field for the name.
- *     @type string $price_field Optional ACF field for the price.
- *     @type string $button_text Text for the CTA button.
+ * @param array $args {   
+ *     Optional. Configuration for the card display.
+ *     @type string $name_field  Optional ACF field slug to override title. Default empty.
+ *     @type string $price_field Optional ACF field slug for price display. Default empty.
+ *     @type string $button_text Text for the call-to-action button. Default 'View Item'.
  * }
  */
 function generic_shop_card($args = []) {
