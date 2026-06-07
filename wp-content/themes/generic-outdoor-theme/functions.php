@@ -341,10 +341,10 @@ function generic_outdoor_search_where($where) {
         $query = $wpdb->esc_like($query);
 
         // This adds an OR condition to the SQL WHERE clause to check term names
-        $where .= " OR (
-            t.name LIKE '%{$query}%'
+        $where .= $wpdb->prepare(" OR (
+            t.name LIKE %s
             AND {$wpdb->posts}.post_status = 'publish'
-        )";
+        )", '%' . $query . '%');
     }
 
     return $where;
