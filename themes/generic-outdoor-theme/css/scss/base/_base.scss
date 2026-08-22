@@ -1,0 +1,110 @@
+/**
+ * Base Styles
+ * Core document styles and foundational typography
+ */
+
+@use "variables" as *;
+@use "mixins" as *;
+
+html {
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-stack);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+// The main site wrapper must be a flex container to push the footer down
+.site {
+  display: flex;
+  flex-direction: column;
+  // Accounts for the WP Admin Bar height if present
+  min-height: 100vh;
+  min-height: 100dvh; // Use dynamic viewport height for mobile browsers
+
+  body.admin-bar & {
+    min-height: calc(100vh - 32px);
+
+    @media screen and (max-width: 782px) {
+      min-height: calc(100vh - 46px);
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-brand);
+  text-decoration: none;
+  @include transition(color, $transition-fast);
+
+  &:hover,
+  &:focus {
+    color: var(--color-accent);
+  }
+}
+
+.site-header,
+.site-footer {
+  padding: var(--container-padding);
+  background: var(--color-muted);
+}
+
+.site-title {
+  margin: 0;
+}
+
+/**
+ * Form Elements
+ * Consistent styling for form inputs and controls
+ */
+input,
+textarea,
+select {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  @include transition((border-color, box-shadow, outline), $transition-fast);
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--color-border), black 10%);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-color: var(--color-brand);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background-color: var(--color-muted);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: $font-weight-medium;
+  color: var(--color-text);
+}

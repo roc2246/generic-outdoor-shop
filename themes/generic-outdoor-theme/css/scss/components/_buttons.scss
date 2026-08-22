@@ -1,0 +1,138 @@
+/**
+ * Buttons Component
+ * Primary and secondary action buttons with interactive states
+ * Includes focus states for accessibility
+ * 
+ * @example
+ * <button class="button">Primary Action</button>
+ * <button class="button button--secondary">Secondary Action</button>
+ * <button class="button" disabled>Disabled Action</button>
+ */
+
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+@use "../base/z-index" as *;
+
+// Primary button
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  @include transition(all, $transition-normal);
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-brand), black 10%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:focus {
+    @include focus-ring();
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Secondary button variant
+.button--secondary {
+  background: var(--color-accent);
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-accent), black 10%);
+  }
+}
+
+// Menu toggle button
+.js-menu-toggle {
+  background-color: var(--color-accent);
+  color: #fff;
+  @include transition(background-color, $transition-normal);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-accent), black 10%);
+  }
+
+  &:focus {
+    @include focus-ring();
+  }
+}
+
+// Menu close button
+.menu-close-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: z(modal);
+  @include transition(opacity, $transition-normal);
+
+  &:hover,
+  &:focus {
+    opacity: 0.7;
+    @include focus-ring();
+  }
+}
+
+// Search overlay close button
+.search-overlay__close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  width: 3rem;
+  height: 3rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--color-background);
+
+  border: none;
+  border-radius: 50%;
+
+  color: var(--color-text);
+
+  cursor: pointer;
+
+  z-index: z(notification);
+
+  box-shadow: $shadow-md;
+
+  @include transition((transform, opacity, box-shadow), $transition-normal);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: $shadow-lg;
+  }
+
+  &:focus {
+    @include focus-ring();
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

@@ -1,0 +1,55 @@
+/**
+ * CSS Custom Properties
+ * Theme variables for runtime customization
+ * These can be overridden via JavaScript or theme customizer
+ */
+
+@use "sass:map";
+@use "variables" as *;
+
+:root {
+  // Brand colors
+  --color-brand: #{$brand-color};
+  --color-accent: #{$accent-color};
+  --color-muted: #{$muted};
+  
+  // Text colors
+  --color-text: #{$text-color};
+  --color-text-secondary: #{$text-secondary};
+  
+  // Background and borders
+  --color-background: #{$background-color};
+  --color-border: #{$border-color};
+  
+  // Typography
+  --font-stack: #{$font-stack};
+  --font-size-base: #{$font-base};
+  --font-size-large: #{$font-large};
+  --font-size-xl: #{$font-xl};
+  
+  --font-weight-normal: #{$font-weight-normal};
+  --font-weight-medium: #{$font-weight-medium};
+  --font-weight-bold: #{$font-weight-bold};
+  
+  // Shadows
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  
+  // Transitions
+  --transition-fast: #{$transition-fast};
+  --transition-normal: #{$transition-normal};
+  --transition-slow: #{$transition-slow};
+  
+  // Spacing
+  --spacing-xs: #{map.get($spacing, xs)};
+  --spacing-sm: #{map.get($spacing, sm)};
+  --spacing-md: #{map.get($spacing, md)};
+  --spacing-lg: #{map.get($spacing, lg)};
+  --spacing-xl: #{map.get($spacing, xl)};
+  --spacing-xxl: #{map.get($spacing, xxl)};
+  
+  --container-padding: #{$container-padding};
+  --section-spacing: #{$section-spacing};
+}

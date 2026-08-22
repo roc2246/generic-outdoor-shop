@@ -1,0 +1,14 @@
+/*
+Theme Name: Generic Outdoor Theme
+Theme URI: https://example.com/
+Author: Generic Outdoor
+Author URI: https://example.com/
+Description: A minimal starter theme for the Generic Outdoor Shop.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: generic-outdoor-theme
+Tags: one-column, custom-logo, custom-menu
+*/
+
+/* Main styles are compiled from the SCSS source in css/scss and enqueued from build/index.css. */
