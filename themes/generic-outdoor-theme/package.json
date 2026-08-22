@@ -1,7 +1,7 @@
 {
   "name": "generic-outdoor-theme",
   "version": "1.0.0",
-  "description": "",
+  "description": "Custom WordPress theme for the Generic Outdoor Shop site.",
   "main": "index.js",
   "scripts": {
     "build": "wp-scripts build",
@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL-2.0-or-later",
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
     "@wordpress/scripts": "*",

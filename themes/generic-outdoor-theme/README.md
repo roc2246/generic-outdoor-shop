@@ -17,6 +17,10 @@ This theme is designed to be:
 - ACF field integration through centralized constants in `inc/acf-fields.php`.
 - Modular SCSS architecture (`base`, `layout`, `components`, `pages`, `utils`).
 
+Site-wide content types and custom authentication routes are registered by the
+MU-plugins in `wp-content/mu-plugins/`. See the [wp-content handoff guide](../../README.md)
+for ownership boundaries, route slugs, plugin responsibilities, and deployment notes.
+
 ## Technology Stack
 
 - WordPress / PHP
@@ -29,6 +33,7 @@ This theme is designed to be:
 - WordPress installation with this theme available under `wp-content/themes/generic-outdoor-theme`.
 - Node.js and npm available locally.
 - Advanced Custom Fields plugin active if product/service custom fields are required.
+- The `Generic Outdoor MU Post Types` MU-plugin present so product and service content remains available independently of the theme.
 
 ## Setup
 
@@ -69,8 +74,13 @@ Theme assets are enqueued from `functions.php` using the generated build files.
   - `acf-fields.php`: ACF field constants.
   - `search-route.php`: REST search route and response shaping.
 - `template-parts/`: Reusable theme partials.
+- `src/`: JavaScript entry point and frontend modules.
 - `css/scss/`: SCSS source architecture.
 - `build/`: Compiled frontend assets.
+
+The SCSS source structure is documented in [`css/SCSS_ARCHITECTURE.md`](css/SCSS_ARCHITECTURE.md).
+Accessibility-specific checks and known follow-up work are documented in
+[`css/scss/ACCESSIBILITY.md`](css/scss/ACCESSIBILITY.md).
 
 ## REST Search Endpoint Notes
 
@@ -83,6 +93,8 @@ Theme assets are enqueued from `functions.php` using the generated build files.
 
 - Keep SCSS changes in `css/scss/`; do not edit compiled files in `build/` manually.
 - Keep function docblocks aligned with actual behavior when updating defaults.
+- Keep site-wide post types and authentication routes in `wp-content/mu-plugins/`, not in theme templates.
+- Rebuild the theme after source changes and verify the generated assets before deployment.
 - Update this README whenever build paths, required plugins, or architecture responsibilities change.
 
 ## License
