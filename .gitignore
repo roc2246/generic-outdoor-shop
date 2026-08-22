@@ -1,1 +1,7 @@
 node_modules/
+uploads/
+ai1wm-backups/
+backups-dup-lite/
+upgrade/
+cache/
+*.log
