@@ -68,75 +68,99 @@ class Search {
       this.resultsDiv.removeChild(this.resultsDiv.firstChild);
     }
 
-    const row = document.createElement('div');
-    row.className = 'row';
+    const row = document.createElement("div");
+    row.className = "row";
 
     // General Information section
-    const generalSection = this.createSection('General Information', results.generalInfo, (item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = item.permalink;
-      a.textContent = item.title;
-      li.appendChild(a);
+    const generalSection = this.createSection(
+      "General Information",
+      results.generalInfo,
+      (item) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = item.permalink;
+        a.textContent = item.title;
+        li.appendChild(a);
 
-      if (item.postType === 'post' && item.authorName) {
-        const byText = document.createTextNode(` by ${item.authorName}`);
-        li.appendChild(byText);
-      }
+        if (item.postType === "post" && item.authorName) {
+          const byText = document.createTextNode(` by ${item.authorName}`);
+          li.appendChild(byText);
+        }
 
-      return li;
-    });
+        return li;
+      },
+    );
     row.appendChild(generalSection);
 
     // Products section
-    const productsSection = this.createSection('Products', results.products, (item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = item.permalink;
-      a.textContent = item.title;
-      li.appendChild(a);
+    const productsSection = this.createSection(
+      "Products",
+      results.products,
+      (item) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = item.permalink;
+        a.textContent = item.title;
+        li.appendChild(a);
 
-      if (item.price) {
-        const span = document.createElement('span');
-        span.textContent = ` - $${item.price}`;
-        li.appendChild(span);
-      }
+        if (item.price) {
+          const span = document.createElement("span");
+          span.textContent = ` - ${new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(item.price)}`;
+          li.appendChild(span);
+        }
 
-      return li;
-    });
+        return li;
+      },
+    );
     row.appendChild(productsSection);
 
     // Services section
-    const servicesSection = this.createSection('Services', results.services, (item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = item.permalink;
-      a.textContent = item.title;
-      li.appendChild(a);
+    const servicesSection = this.createSection(
+      "Services",
+      results.services,
+      (item) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = item.permalink;
+        a.textContent = item.title;
+        li.appendChild(a);
 
-      return li;
-    });
+        if (item.price) {
+          const span = document.createElement("span");
+          span.textContent = ` - ${new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(item.price)}`;
+          li.appendChild(span);
+        }
+
+        return li;
+      },
+    );
     row.appendChild(servicesSection);
 
     this.resultsDiv.appendChild(row);
   }
 
   createSection(title, items, renderItem) {
-    const section = document.createElement('div');
-    section.className = 'one-third';
+    const section = document.createElement("div");
+    section.className = "one-third";
 
-    const heading = document.createElement('h2');
-    heading.className = 'search-overlay__section-title';
+    const heading = document.createElement("h2");
+    heading.className = "search-overlay__section-title";
     heading.textContent = title;
     section.appendChild(heading);
 
     if (items.length === 0) {
-      const emptyMsg = document.createElement('p');
+      const emptyMsg = document.createElement("p");
       emptyMsg.textContent = `No ${title.toLowerCase()} match that search.`;
       section.appendChild(emptyMsg);
     } else {
-      const ul = document.createElement('ul');
-      ul.className = 'link-list min-list';
+      const ul = document.createElement("ul");
+      ul.className = "link-list min-list";
       items.forEach((item) => {
         ul.appendChild(renderItem(item));
       });
@@ -163,10 +187,10 @@ class Search {
       this.renderResults(results);
       this.isSpinnerVisible = false;
     } catch (err) {
-      console.error('Search failed:', err);
-      const errorMsg = document.createElement('p');
-      errorMsg.textContent = 'Search unavailable. Please try again.';
-      this.resultsDiv.innerHTML = '';
+      console.error("Search failed:", err);
+      const errorMsg = document.createElement("p");
+      errorMsg.textContent = "Search unavailable. Please try again.";
+      this.resultsDiv.innerHTML = "";
       this.resultsDiv.appendChild(errorMsg);
       this.isSpinnerVisible = false;
     }
