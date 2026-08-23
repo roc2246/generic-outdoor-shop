@@ -52,10 +52,10 @@ function generic_outdoor_theme_setup()
 {
   add_theme_support('title-tag');
   add_theme_support('custom-logo', array(
-    'height'      => 60,
-    'width'       => 180,
+    'height' => 60,
+    'width' => 180,
     'flex-height' => true,
-    'flex-width'  => true,
+    'flex-width' => true,
   ));
   add_theme_support('html5', array(
     'search-form',
@@ -81,7 +81,7 @@ if (!function_exists('pageBanner')) {
    *     Optional. Array of banner arguments.
    *     @type string $title    The banner title. Defaults to archive title or post title.
    *     @type string $subtitle Optional subtitle text.
-     *     @type string $heading_level HTML heading level (h1-h6). Default 'h2'.
+   *     @type string $heading_level HTML heading level (h1-h6). Default 'h2'.
    * }
    */
   function pageBanner($args = array())
@@ -122,7 +122,8 @@ if (!function_exists('pageBanner')) {
  *
  * @return bool True if user is a subscriber, false otherwise.
  */
-function generic_outdoor_user_is_subscriber() {
+function generic_outdoor_user_is_subscriber()
+{
   $user = wp_get_current_user();
   return count($user->roles) === 1 && $user->roles[0] === 'subscriber';
 }
@@ -181,59 +182,63 @@ function generic_outdoor_login_header_title()
  *     @type string $button_text Text for the call-to-action button. Default 'View Item'.
  * }
  */
-function generic_shop_card($args = []) {
-    $defaults = [
-        'name_field'  => '',
-        'price_field' => '',
-        'button_text' => __('View Item', 'generic-outdoor-theme'),
-    ];
+function generic_shop_card($args = [])
+{
+  $defaults = [
+    'name_field' => '',
+    'price_field' => '',
+    'button_text' => __('View Item', 'generic-outdoor-theme'),
+  ];
 
-    $args = wp_parse_args($args, $defaults);
+  $args = wp_parse_args($args, $defaults);
 
-    $name = function_exists('get_field') && $args['name_field']
-        ? get_field($args['name_field'])
-        : get_the_title();
+  $name = function_exists('get_field') && $args['name_field']
+    ? get_field($args['name_field'])
+    : get_the_title();
 
-    $price = function_exists('get_field') && $args['price_field']
-        ? get_field($args['price_field'])
-        : null;
-    ?>
+  $price = function_exists('get_field') && $args['price_field']
+    ? get_field($args['price_field'])
+    : null;
+  ?>
 
-    <article class="card">
-        <div class="card__content">
+  <article class="card">
+    <div class="card__content">
 
-            <h2 class="card__title">
-                <a href="<?php the_permalink(); ?>">
-                    <?php echo esc_html($name ?: get_the_title()); ?>
-                </a>
-            </h2>
+      <h2 class="card__title">
+        <a href="<?php the_permalink(); ?>">
+          <?php echo esc_html($name ?: get_the_title()); ?>
+        </a>
+      </h2>
 
-            <a class="card__image-link" href="<?php the_permalink(); ?>" aria-label="View <?php echo esc_attr($name ?: get_the_title()); ?>">
-                <?php if (has_post_thumbnail()) : ?>
-                    <?php the_post_thumbnail('medium'); ?>
-                <?php else : ?>
-                    <img class="card__placeholder" src="<?php echo esc_url(get_theme_file_uri('/build/images/default-image.jpg')); ?>" alt="No image available for <?php echo esc_attr($name ?: get_the_title()); ?>">
-                <?php endif; ?>
-            </a>
+      <a class="card__image-link" href="<?php the_permalink(); ?>"
+        aria-label="View <?php echo esc_attr($name ?: get_the_title()); ?>">
+        <?php if (has_post_thumbnail()): ?>
+          <?php the_post_thumbnail('medium'); ?>
+        <?php else: ?>
+          <img class="card__placeholder" src="<?php echo esc_url(get_theme_file_uri('/build/images/default-image.jpg')); ?>"
+            alt="No image available for <?php echo esc_attr($name ?: get_the_title()); ?>">
+        <?php endif; ?>
+      </a>
 
-            <p class="card__excerpt">
-                <?php echo esc_html(wp_trim_words(get_the_excerpt() ?: get_the_content(), 25)); ?>
-            </p>
+      <p class="card__excerpt">
+        <?php echo esc_html(wp_trim_words(get_the_excerpt() ?: get_the_content(), 25)); ?>
+      </p>
 
-            <?php if ($price) : ?>
-                <p class="card__price">
-                    <?php printf(esc_html__('Price: %s', 'generic-outdoor-theme'), esc_html($price)); ?>
-                </p>
-            <?php endif; ?>
+      <?php if ($price): ?>
+        <p class="card__price">
+          <?php printf(esc_html__('Price: %s', 'generic-outdoor-theme'), esc_html($price)); ?>
+        </p>
+      <?php endif; ?>
 
-            <a class="button button--primary" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr($args['button_text'] . ' - ' . ($name ?: get_the_title())); ?>">
-                <?php echo esc_html($args['button_text']); ?>
-            </a>
+      <a class="button button--primary" href="<?php the_permalink(); ?>"
+        aria-label="<?php echo esc_attr($args['button_text'] . ' - ' . ($name ?: get_the_title())); ?>">
+        <?php echo esc_html($args['button_text']); ?>
+      </a>
 
-        </div>
-    </article>
+    </div>
+  </article>
 
-    <?php
+  <?php
 }
 
 /**
@@ -247,103 +252,105 @@ function generic_shop_card($args = []) {
  *     @type string $description_field ACF field name for the description. Default ''.
  * }
  */
-function generic_shop_detail($args = []) {
-    $defaults = [
-        'wrapper_class'     => 'listing-detail',
-        'name_field'        => '',
-        'price_field'       => 'price',
-        'description_field' => '',
-    ];
+function generic_shop_detail($args = [])
+{
+  $defaults = [
+    'wrapper_class' => 'listing-detail',
+    'name_field' => '',
+    'price_field' => 'price',
+    'description_field' => '',
+  ];
 
-    $args = wp_parse_args($args, $defaults);
+  $args = wp_parse_args($args, $defaults);
 
-    $wrapper_class = $args['wrapper_class'];
+  $wrapper_class = $args['wrapper_class'];
 
-    $name = null;
-    $price = null;
-    $description = null;
+  $name = null;
+  $price = null;
+  $description = null;
 
-    if (function_exists('get_field')) {
-        if ($args['name_field']) {
-            $name = get_field($args['name_field']);
-        }
-
-        if ($args['price_field']) {
-            $price = get_field($args['price_field']);
-        }
-
-        if ($args['description_field']) {
-            $description = get_field($args['description_field']);
-        }
+  if (function_exists('get_field')) {
+    if ($args['name_field']) {
+      $name = get_field($args['name_field']);
     }
-    ?>
 
-    <div class="<?php echo esc_attr($wrapper_class); ?>">
+    if ($args['price_field']) {
+      $price = get_field($args['price_field']);
+    }
 
-        <?php if (has_post_thumbnail()) : ?>
-            <div class="<?php echo esc_attr($wrapper_class); ?>__image">
-                <?php the_post_thumbnail('large'); ?>
-            </div>
-        <?php else : ?>
-            <div class="<?php echo esc_attr($wrapper_class); ?>__image">
-                <img
-                    src="<?php echo esc_url(get_theme_file_uri('/build/images/default-image.jpg')); ?>"
-                    alt="<?php esc_attr_e('No image available', 'generic-outdoor-theme'); ?>">
-            </div>
-        <?php endif; ?>
+    if ($args['description_field']) {
+      $description = get_field($args['description_field']);
+    }
+  }
+  ?>
 
-        <div class="<?php echo esc_attr($wrapper_class); ?>__summary">
+  <div class="<?php echo esc_attr($wrapper_class); ?>">
 
-            <?php if ($name) : ?>
-                <p class="<?php echo esc_attr($wrapper_class); ?>__name">
-                    <?php echo esc_html($name); ?>
-                </p>
-            <?php endif; ?>
+    <?php if (has_post_thumbnail()): ?>
+      <div class="<?php echo esc_attr($wrapper_class); ?>__image">
+        <?php the_post_thumbnail('large'); ?>
+      </div>
+    <?php else: ?>
+      <div class="<?php echo esc_attr($wrapper_class); ?>__image">
+        <img src="<?php echo esc_url(get_theme_file_uri('/build/images/default-image.jpg')); ?>"
+          alt="<?php esc_attr_e('No image available', 'generic-outdoor-theme'); ?>">
+      </div>
+    <?php endif; ?>
 
-            <?php if ($price) : ?>
-                <p class="<?php echo esc_attr($wrapper_class); ?>__price">
-                    <?php printf(esc_html__('Price: %s', 'generic-outdoor-theme'), esc_html($price)); ?>
-                </p>
-            <?php endif; ?>
+    <div class="<?php echo esc_attr($wrapper_class); ?>__summary">
 
-            <?php if ($description) : ?>
-                <p class="<?php echo esc_attr($wrapper_class); ?>__description">
-                    <?php printf(esc_html__('Description: %s', 'generic-outdoor-theme'), esc_html($description)); ?>
-                </p>
-            <?php endif; ?>
+      <?php if ($name): ?>
+        <p class="<?php echo esc_attr($wrapper_class); ?>__name">
+          <?php echo esc_html($name); ?>
+        </p>
+      <?php endif; ?>
 
-            <div class="generic-content">
-                <?php the_content(); ?>
-            </div>
+      <?php if ($price): ?>
+        <p class="<?php echo esc_attr($wrapper_class); ?>__price">
+          <?php printf(esc_html__('Price: %s', 'generic-outdoor-theme'), esc_html($price)); ?>
+        </p>
+      <?php endif; ?>
 
-        </div>
+      <?php if ($description): ?>
+        <p class="<?php echo esc_attr($wrapper_class); ?>__description">
+          <?php printf(esc_html__('Description: %s', 'generic-outdoor-theme'), esc_html($description)); ?>
+        </p>
+      <?php endif; ?>
+
+      <div class="generic-content">
+        <?php the_content(); ?>
+      </div>
 
     </div>
 
-    <?php
+  </div>
+
+  <?php
 }
 
 /**
  * Modify the main search query to include custom post types and search by taxonomies
  */
-function generic_outdoor_adjust_queries($query) {
-    if (!is_admin() && $query->is_main_query() && $query->is_search()) {
-        // 1. Include products and services in the standard frontend search
-        $query->set('post_type', array('post', 'page', 'product', 'service'));
-    }
+function generic_outdoor_adjust_queries($query)
+{
+  if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+    // 1. Include products and services in the standard frontend search
+    $query->set('post_type', array('post', 'page', 'product', 'service'));
+  }
 }
 add_action('pre_get_posts', 'generic_outdoor_adjust_queries');
 
 /**
  * Extend WordPress search to include taxonomy terms.
  */
-function generic_outdoor_search_search($search, $query) {
-    global $wpdb;
+function generic_outdoor_search_search($search, $query)
+{
+  global $wpdb;
 
   if (!is_admin() && $query->is_main_query() && $query->is_search()) {
     $term = $wpdb->esc_like($query->get('s'));
     $taxonomy_search = $wpdb->prepare(
-      "{$wpdb->terms}.name LIKE %s AND {$wpdb->posts}.post_status = 'publish'",
+      "t.name LIKE %s AND {$wpdb->posts}.post_status = 'publish'",
       '%' . $term . '%'
     );
 
@@ -351,30 +358,32 @@ function generic_outdoor_search_search($search, $query) {
       $search = preg_replace('/^\\s*AND\\s+/i', '', $search);
       $search = ' AND (' . $search . ' OR ' . $taxonomy_search . ')';
     }
-    }
+  }
 
   return $search;
 }
 
-function generic_outdoor_search_join($join, $query) {
-    global $wpdb;
+function generic_outdoor_search_join($join, $query)
+{
+  global $wpdb;
 
   if (!is_admin() && $query->is_main_query() && $query->is_search()) {
-        // Join the terms and relationships tables so we can see term names
-        $join .= " LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id
+    // Join the terms and relationships tables so we can see term names
+    $join .= " LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id
                    LEFT JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
                    LEFT JOIN {$wpdb->terms} t ON tt.term_id = t.term_id";
-    }
+  }
 
-    return $join;
+  return $join;
 }
 
-function generic_outdoor_search_distinct($distinct, $query) {
+function generic_outdoor_search_distinct($distinct, $query)
+{
   if (!is_admin() && $query->is_main_query() && $query->is_search()) {
-        // Prevent duplicate results if a post matches on both title and category
-        return "DISTINCT";
-    }
-    return $distinct;
+    // Prevent duplicate results if a post matches on both title and category
+    return "DISTINCT";
+  }
+  return $distinct;
 }
 
 add_filter('posts_join', 'generic_outdoor_search_join', 10, 2);
